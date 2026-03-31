@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Munnar Road Trip — Apr 2–6, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #1a3a2a;
+    --green-mid: #2d5a3d;
+    --green-light: #4a8c5c;
+    --green-mist: #7dbf8e;
+    --cream: #f5f0e8;
+    --cream-dark: #ede5d4;
+    --amber: #d4891a;
+    --amber-light: #f0b84a;
+    --text-dark: #1a1a14;
+    --text-mid: #3d3d30;
+    --text-light: #7a7a64;
+    --night: #0d1f16;
+    --night-card: #142218;
+    --border: rgba(74,140,92,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .hero {
+    background: var(--night);
+    color: var(--cream);
+    padding: 48px 24px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 0%, rgba(74,140,92,0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 100%, rgba(45,90,61,0.3) 0%, transparent 50%);
+  }
+  .hero-inner { position: relative; max-width: 680px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(74,140,92,0.25);
+    border: 1px solid rgba(125,191,142,0.4);
+    color: var(--green-mist);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--green-mist);
+  }
+  .hero-sub {
+    color: rgba(245,240,232,0.6);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+  }
+  .hero-stats {
+    display: flex; gap: 24px; flex-wrap: wrap;
+  }
+  .stat {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .stat-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+    color: var(--amber-light);
+  }
+  .stat-lbl {
+    font-size: 11px;
+    color: rgba(245,240,232,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* BODY */
+  .container { max-width: 680px; margin: 0 auto; padding: 0 16px 60px; }
+
+  /* DAY BLOCK */
+  .day-block { margin-top: 36px; }
+  .day-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 20px;
+    border-radius: 14px 14px 0 0;
+    border-bottom: none;
+  }
+  .day-header.night-drive { background: var(--night); }
+  .day-header.day1 { background: var(--green-deep); }
+  .day-header.day2 { background: #1e3a50; }
+  .day-header.day3 { background: #3a1e10; }
+
+  .day-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+  }
+  .day-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--cream);
+    flex: 1;
+  }
+  .day-date {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .night-drive .day-date { background: rgba(125,191,142,0.15); color: var(--green-mist); }
+  .day1 .day-date { background: rgba(125,191,142,0.15); color: var(--green-mist); }
+  .day2 .day-date { background: rgba(100,160,210,0.2); color: #a0cce8; }
+  .day3 .day-date { background: rgba(212,137,26,0.2); color: var(--amber-light); }
+
+  .day-body {
+    background: white;
+    border-radius: 0 0 14px 14px;
+    border: 1px solid var(--border);
+    border-top: none;
+    overflow: hidden;
+  }
+
+  /* STOP CARDS */
+  .stop {
+    display: flex; gap: 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: background 0.15s;
+  }
+  .stop:last-child { border-bottom: none; }
+  .stop:hover { background: #faf9f5; }
+
+  .stop-timeline {
+    width: 52px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 0;
+    position: relative;
+  }
+  .stop-timeline::after {
+    content: '';
+    position: absolute;
+    top: 38px; bottom: -1px;
+    left: 50%;
+    width: 1.5px;
+    background: var(--border);
+    transform: translateX(-50%);
+  }
+  .stop:last-child .stop-timeline::after { display: none; }
+
+  .stop-dot {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    font-family: 'DM Mono', monospace;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+  .dot-green { background: #e6f4eb; color: var(--green-mid); border: 1.5px solid var(--green-light); }
+  .dot-amber { background: #fdf3e0; color: #a06010; border: 1.5px solid var(--amber); }
+  .dot-blue  { background: #e0eef8; color: #1a5080; border: 1.5px solid #4a90c0; }
+  .dot-red   { background: #fde8e8; color: #a02020; border: 1.5px solid #d05050; }
+  .dot-star  { background: var(--night); color: var(--amber-light); border: 1.5px solid var(--amber); }
+  .dot-bed   { background: var(--night); color: #a0cce8; border: 1.5px solid #4a90c0; }
+  .dot-petrol{ background: #fff3e0; color: #a06010; border: 1.5px solid #e0a040; }
+  .dot-food  { background: #fef6e4; color: #806000; border: 1.5px solid #d4a020; }
+
+  .stop-content { flex: 1; padding: 14px 16px 14px 4px; }
+
+  .stop-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-light);
+    letter-spacing: 0.06em;
+    margin-bottom: 3px;
+  }
+  .stop-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .stop-name a {
+    color: var(--text-dark);
+    text-decoration: none;
+  }
+  .stop-name a:hover { color: var(--green-light); }
+  .map-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    background: #e8f5ec;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+  .map-btn:hover { background: #cce8d4; }
+  .map-btn::before { content: '↗'; font-size: 9px; }
+
+  .stop-note {
+    font-size: 12.5px;
+    color: var(--text-mid);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+  .stop-note strong { font-weight: 500; color: var(--text-dark); }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 8px;
+    margin-left: 4px;
+  }
+  .tag-swim { background: #ddf0ff; color: #0a6090; }
+  .tag-view { background: #e6f4eb; color: #1a5a2a; }
+  .tag-food { background: #fff3d4; color: #7a4a00; }
+  .tag-stay { background: #f0e8ff; color: #4a2a80; }
+  .tag-drive{ background: #f0f0f0; color: #404040; }
+  .tag-boat { background: #d4f0ff; color: #0a4060; }
+  .tag-trek { background: #e8fce8; color: #1a6020; }
+  .tag-tip  { background: #fff0e0; color: #804000; }
+
+  /* INFO BOXES */
+  .info-box {
+    margin: 12px 16px 4px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .info-warn { background: #fffbea; border-left: 3px solid var(--amber); color: #5a4000; }
+  .info-tip  { background: #eaf7ef; border-left: 3px solid var(--green-light); color: #1a4a28; }
+
+  /* ROUTE DIVIDER */
+  .route-div {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px;
+    background: #f7f5f0;
+    border-top: 1px dashed rgba(0,0,0,0.08);
+    border-bottom: 1px dashed rgba(0,0,0,0.08);
+  }
+  .route-div span {
+    font-size: 11px;
+    color: var(--text-light);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+  }
+  .route-arrow { color: var(--green-light); font-size: 13px; }
+
+  /* FOOTER */
+  .footer {
+    background: var(--night);
+    color: rgba(245,240,232,0.5);
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    margin-top: 40px;
+  }
+  .footer strong { color: var(--green-mist); }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 26px; }
+    .hero-stats { gap: 16px; }
+    .stat-val { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">🚗 Road Trip Reference · Toyota Urban Cruiser</div>
+    <h1>Chennai → <em>Munnar</em><br>& Back</h1>
+    <p class="hero-sub">Apr 2 (Thu) 5 PM departure · Return Apr 6 (Mon) ~5 AM</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-val">3</span><span class="stat-lbl">Nights</span></div>
+      <div class="stat"><span class="stat-val">22+</span><span class="stat-lbl">Stops</span></div>
+      <div class="stat"><span class="stat-val">~1100</span><span class="stat-lbl">Total km</span></div>
+      <div class="stat"><span class="stat-val">2</span><span class="stat-lbl">Stays</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════ NIGHT DRIVE ══ -->
+  <div class="day-block">
+    <div class="day-header night-drive">
+      <div>
+        <div class="day-num">Night Drive</div>
+        <div class="day-title">Chennai → Udumalaipettai → Lakkam</div>
+      </div>
+      <div class="day-date">Apr 2 Thu · 5 PM</div>
+    </div>
+    <div class="day-body">
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">S</div></div>
+        <div class="stop-content">
+          <div class="stop-time">17:00 — DEPARTURE</div>
+          <div class="stop-name">
+            <a href="https://maps.app.goo.gl/Chennai" target="_blank">Chennai</a>
+            <span class="tag tag-drive">Start</span>
+          </div>
+          <div class="stop-note">Take <strong>NH44</strong> via Krishnagiri → Dharmapuri → Erode, then NH83 toward Palani → Udumalaipettai → Pollachi → Valparai road toward Marayoor. <strong>~470 km · ~8–9 hrs.</strong> Plan a dinner halt around Dindigul or Palani (9–10 PM).</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-petrol">⛽</div></div>
+        <div class="stop-content">
+          <div class="stop-time">~01:30 — FUEL + FRESHEN UP</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/petrol+bunk+Udumalaipettai" target="_blank">Petrol Bunk, Udumalaipettai</a>
+            <a href="https://www.google.com/maps/search/petrol+bunk+near+Udumalaipettai" target="_blank" class="map-btn">Find on Maps</a>
+          </div>
+          <div class="stop-note">Full tank up before the ghat road. Most 24hr bunks are on the <strong>NH83 Udumalaipettai bypass</strong> — BPCL and HP stations available. Wash up at the station, buy water and snacks for the early morning ahead.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-food">☕</div></div>
+        <div class="stop-content">
+          <div class="stop-time">~02:00 — EARLY MORNING CHAI</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/early+morning+tea+shop+Udumalaipettai" target="_blank">Road Tea Stall, Udumalaipettai–Pollachi Road</a>
+            <a href="https://www.google.com/maps/search/tea+stall+Udumalaipettai" target="_blank" class="map-btn">Find on Maps</a>
+          </div>
+          <div class="stop-note">Small wayside tea shops open from 1–2 AM on the Pollachi–Valparai road corridor. Grab chai and biscuits. The ghat road to Marayoor begins after Pollachi — <strong>drive slowly on the narrow curves.</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ DAY 1 ══ -->
+  <div class="day-block">
+    <div class="day-header day1">
+      <div>
+        <div class="day-num">Day 1</div>
+        <div class="day-title">Marayoor Forests → Lakkam → Munnar Town → Candlewood</div>
+      </div>
+      <div class="day-date">Apr 3 Fri</div>
+    </div>
+    <div class="day-body">
+
+      <div class="info-box info-tip">
+        📍 <strong>Route Note:</strong> Lakkam → Thoovanam → Sandalwood Forest → back on NH49 toward Munnar. After lunch take Viripara alternate route (via Anavilasom road) then return via 2nd Mile and Karadipara to Candlewood.
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-food">🍳</div></div>
+        <div class="stop-content">
+          <div class="stop-time">~06:00 — BREAKFAST</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/breakfast+hotel+Marayoor" target="_blank">Roadside Eatery, Marayoor Town</a>
+            <a href="https://www.google.com/maps/search/hotel+Marayoor+Kerala" target="_blank" class="map-btn">Find on Maps</a>
+            <span class="tag tag-food">Breakfast</span>
+          </div>
+          <div class="stop-note">A few small hotels open from 6 AM near <strong>Marayoor junction</strong>. Try idli, pongal or parotta with chicken curry — classic Kerala breakfast. Ask the owner about Lakkam road conditions.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">1</div></div>
+        <div class="stop-content">
+          <div class="stop-time">08:30 – 11:00 — LAKKAM WATERFALLS</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Lakkam+Waterfalls/@10.188772,77.1115059" target="_blank">Lakkam Waterfalls</a>
+            <a href="https://maps.app.goo.gl/7WCPRo2F1msRAxbh6" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-swim">Bathing</span>
+          </div>
+          <div class="stop-note"><strong>Entry ₹50/person · Opens 8:30 AM.</strong> Spend full 2.5 hrs bathing in the natural pool — stones are slippery, walk barefoot on visible rocks. <strong>Forest trek ₹100/person</strong> runs alongside the fall (~1 hr). Water in April is ice-cold but swimmable. Café on site for a snack after your dip.</div>
+        </div>
+      </div>
+
+      <div class="route-div">
+        <span class="route-arrow">→</span>
+        <span>~5 km drive · 10 min toward Thoovanam</span>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">2</div></div>
+        <div class="stop-content">
+          <div class="stop-time">11:15 – 11:50 — THOOVANAM WATERFALL VIEW POINT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Thoovanam+Waterfall+View+Point/@10.3047298,77.1906535" target="_blank">Thoovanam Waterfall View Point</a>
+            <a href="https://maps.app.goo.gl/WHLrvBh4vs3VzWBbA" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-view">Viewpoint</span>
+          </div>
+          <div class="stop-note">A stunning hidden viewpoint overlooking a tiered waterfall deep in the Chinnar forest zone. Quick 30-minute stop — photograph from the viewing platform. May require a short 200m forest walk from the road.</div>
+        </div>
+      </div>
+
+      <div class="route-div">
+        <span class="route-arrow">→</span>
+        <span>~3 km · Sandalwood Forest area</span>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">3</div></div>
+        <div class="stop-content">
+          <div class="stop-time">12:00 – 12:30 — SANDALWOOD FOREST</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/Sandalwood+Forest+Marayoor+Kerala" target="_blank">Marayoor Sandalwood Forest</a>
+            <a href="https://maps.app.goo.gl/SsNBn1n49WReScKx5" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-trek">Forest</span>
+          </div>
+          <div class="stop-note"><strong>Marayoor is home to India's only naturally occurring wild sandalwood forest</strong> — a unique and rare sight. The forest department allows accompanied walks. Entry with guide is ₹50–100. The scent in the grove is something special — don't skip this.</div>
+        </div>
+      </div>
+
+      <div class="route-div">
+        <span class="route-arrow">→</span>
+        <span>~35 km via NH49 · ~55 min to Munnar direction · Anamudi viewpoint on the way</span>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">4</div></div>
+        <div class="stop-content">
+          <div class="stop-time">13:30 – 14:00 — ANAMUDI VIEW POINT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Anamudi+view+point/@10.143964,77.1065794" target="_blank">Anamudi View Point</a>
+            <a href="https://maps.app.goo.gl/zX85BTHpsky4nTaN8" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-view">View</span>
+          </div>
+          <div class="stop-note">Roadside viewpoint offering a glimpse of <strong>Anamudi peak (2,695 m)</strong> — the highest peak in South India. Quick 20-minute stop. Good photo spot with the peak framed by tea slopes. On the Munnar bypass road.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">5</div></div>
+        <div class="stop-content">
+          <div class="stop-time">14:05 – 14:25 — 8TH MILE MUNNAR</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/8th+mile+munnar/@10.149336,77.0822517" target="_blank">8th Mile, Munnar</a>
+            <a href="https://maps.app.goo.gl/Q5zu7avQSaXs3ChRA" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-view">Scenic Stop</span>
+          </div>
+          <div class="stop-note">A popular scenic stretch on the Munnar highway — tea gardens carpeting both sides with the hill valleys opening below. Quick roadside stop for photos. Small shops for fresh lemon tea available.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-food">🍽</div></div>
+        <div class="stop-content">
+          <div class="stop-time">14:30 – 15:15 — LUNCH</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/best+restaurant+Munnar+town" target="_blank">Munnar Town · Restaurant</a>
+            <a href="https://www.google.com/maps/search/restaurant+Munnar+town+Kerala" target="_blank" class="map-btn">Find on Maps</a>
+            <span class="tag tag-food">Lunch</span>
+          </div>
+          <div class="stop-note">Good options in Munnar town: <strong>Rapsy Restaurant</strong> or <strong>East End Hotel</strong> for Kerala meals (rice + fish curry + papad + payasam). Budget ~₹250/person. This is also your last town for ATMs and essentials before Viripara route.</div>
+        </div>
+      </div>
+
+      <div class="info-box info-warn">
+        🔀 <strong>Alternate Route for Viripara:</strong> After lunch, take the Anavilasom road instead of the main Munnar–Kothamangalam highway to reach Viripara Waterfalls by 4 PM, then loop back via 2nd Mile & Karadipara toward Candlewood. <a href="https://maps.app.goo.gl/m8D1VGi9FvpVtjru6" target="_blank" style="color:#a06010;">Open alternate route ↗</a>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-blue">6</div></div>
+        <div class="stop-content">
+          <div class="stop-time">15:20 – 16:00 — VIRIPARA WATERFALLS</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Viripara+Waterfalls/@10.0783913,76.9617315" target="_blank">Viripara Waterfalls</a>
+            <a href="https://maps.app.goo.gl/uzM8uGuXe1FRG3ut6" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-swim">Waterfall</span>
+          </div>
+          <div class="stop-note">A multi-tiered cascade nestled in a forest clearing — less crowded than Lakkam. <strong>Reach before 4 PM</strong> to have enough light. Short trek from roadside parking (~500m). Swimming possible near the base pool. Return via alternate route back toward Munnar.</div>
+        </div>
+      </div>
+
+      <div class="route-div">
+        <span class="route-arrow">→</span>
+        <span>Return via alternate route back toward Munnar · then NH49 south for viewpoints</span>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">7</div></div>
+        <div class="stop-content">
+          <div class="stop-time">16:30 – 17:00 — 2ND MILE VIEW POINT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/2nd+Mile+View+Point/@10.0414239,77.0392844" target="_blank">2nd Mile View Point</a>
+            <a href="https://maps.app.goo.gl/pFGY1caXsXdbvbJ7A" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-view">Sunset View</span>
+          </div>
+          <div class="stop-note">Elevated roadside viewpoint on NH49 with panoramic views of rolling tea valleys. Evening light here is golden — great for photos. Quick 20-minute stop. On your way back toward Candlewood Homes.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">8</div></div>
+        <div class="stop-content">
+          <div class="stop-time">17:10 – 17:40 — KARADIPARA VIEW POINT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Karadipara+View+Point/@10.0364955,77.0184225" target="_blank">Karadipara View Point</a>
+            <a href="https://maps.app.goo.gl/qTMNFhp9e5U7vMNc9" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-view">Viewpoint</span>
+          </div>
+          <div class="stop-note">One of the best sunset viewpoints near Munnar — a long ridge giving 180° views over the Anamalai valley below. Catch the evening mist rolling in. 20–30 minute stop. Just before your accommodation turnoff.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-bed">🏠</div></div>
+        <div class="stop-content">
+          <div class="stop-time">~18:00 — NIGHT STAY · DAY 1</div>
+          <div class="stop-name">
+            <a href="http://www.candlewoodmunnar.com/" target="_blank">Candlewood Homes Munnar</a>
+            <a href="https://maps.app.goo.gl/D857ppwNjEKPYWyj6" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-stay">Stay ★ 4.2</span>
+          </div>
+          <div class="stop-note">Call: <strong>+91 92070 61687</strong> · Anachal, Munnar Bypass. Spacious rooms, very helpful staff. <strong>Tonight: book your Mattupetty jeep safari with the owner</strong> for Day 2 — they offer budget-friendly packages. Early dinner + rest.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ DAY 2 ══ -->
+  <div class="day-block">
+    <div class="day-header day2">
+      <div>
+        <div class="day-num">Day 2</div>
+        <div class="day-title">Mattupetty → Top Station → Vattavada Direction</div>
+      </div>
+      <div class="day-date">Apr 4 Sat</div>
+    </div>
+    <div class="day-body">
+
+      <div class="info-box info-tip">
+        🌿 <strong>Full-day route:</strong> Flower Garden → Photo Point → Mattupetty Dam → Shooting Point → Echo Point → Kundala Dam → Top Station (→ optionally continue to Vattavada village if time permits). Start by <strong>8:30 AM sharp</strong> to beat weekend crowds at Top Station.
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">1</div></div>
+        <div class="stop-content">
+          <div class="stop-time">08:30 – 09:00 — FLOWER GARDEN + PHOTO POINT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/Flower+Garden+Munnar" target="_blank">Flower Garden & Photo Point, Munnar</a>
+            <a href="https://www.google.com/maps/search/Photo+Point+tea+garden+Munnar" target="_blank" class="map-btn">Find on Maps</a>
+            <span class="tag tag-view">Gardens</span>
+          </div>
+          <div class="stop-note">The KTDC Flower Garden is near Munnar town — manicured hedges and flower beds. Just 2 km further is the famous Tea Garden Photo Point for the iconic wide-angle tea estate shot. 30 minutes combined.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">2</div></div>
+        <div class="stop-content">
+          <div class="stop-time">09:00 – 09:30 — ELEPHANT SAFARI / ELEPHANT ARRIVAL SPOT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/Elephant+arrival+spot+Mattupetty+Munnar" target="_blank">Elephant Arrival Spot · Mattupetty Road</a>
+            <a href="https://www.google.com/maps/search/elephant+safari+Munnar" target="_blank" class="map-btn">Find on Maps</a>
+            <span class="tag tag-trek">Wildlife</span>
+          </div>
+          <div class="stop-note">Around 9 AM elephants from the Mattupetty forest area are sometimes seen crossing near the road. The jeep safari operator (booked via Candlewood) will guide you to active spots. <strong>Elephant rides are not recommended</strong> — spotting from safe distance is the experience here.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">3</div></div>
+        <div class="stop-content">
+          <div class="stop-time">09:30 – 10:15 — TEA FACTORY VISIT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/tea+factory+visit+Munnar" target="_blank">Tata Tea / KDHP Tea Factory, Munnar</a>
+            <a href="https://www.google.com/maps/search/tea+factory+Munnar+visit" target="_blank" class="map-btn">Find on Maps</a>
+            <span class="tag tag-view">Factory Tour</span>
+          </div>
+          <div class="stop-note">The KDHP (Kannan Devan Hills Plantations) museum and tea factory near Mattupetty road offers 30-min guided tours (₹100/person) showing the full tea-making process from leaf to pack. Buy fresh loose-leaf Munnar tea at the end.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-blue">4</div></div>
+        <div class="stop-content">
+          <div class="stop-time">10:15 – 11:30 — MATTUPETTY DAM + BOTANICAL GARDEN</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Mattupetty+Dam/@10.1060467,77.1243507" target="_blank">Mattupetty Dam</a>
+            <a href="https://maps.app.goo.gl/m8D1VGi9FvpVtjru6" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-boat">Boating</span>
+          </div>
+          <div class="stop-note">Speed boat ₹1,100 for 5 seats / 15 min — thrilling ride on the calm reservoir. The nearby <strong>Indo-Swiss Botanical Garden</strong> (managed by the farm) has a pleasant morning walk through high-altitude plant collections. Grab a coffee from the dam side stalls.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">5</div></div>
+        <div class="stop-content">
+          <div class="stop-time">11:30 – 12:00 — SHOOTING POINT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/Shooting+Point+Munnar+Mattupetty" target="_blank">Shooting Point, Mattupetty</a>
+            <a href="https://www.google.com/maps/search/shooting+point+Munnar" target="_blank" class="map-btn">Find on Maps</a>
+            <span class="tag tag-view">Viewpoint</span>
+          </div>
+          <div class="stop-note">Famous film shooting location with a wide grassy meadow framed by tea hills and distant peaks. One of the most photographed spots in Munnar — great group photos. 30-minute stop. Horse rides available (₹200/ride).</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-blue">6</div></div>
+        <div class="stop-content">
+          <div class="stop-time">12:00 – 12:45 — ECHO POINT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/ECHO+point+Munnar/@10.1207928,77.1518198" target="_blank">Echo Point</a>
+            <a href="https://www.google.com/maps/place/ECHO+point+Munnar/@10.1207928,77.1518198" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-swim">Echo + Boating</span>
+          </div>
+          <div class="stop-note">Shout into the valley and hear your voice echo back from the hills — genuinely fun! Entry ₹10. Boating and kayaking on Kundala lake arm (₹50–150). The scenery at midday when mist clears is spectacular. 45 minutes here.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-food">🍽</div></div>
+        <div class="stop-content">
+          <div class="stop-time">12:45 – 13:30 — LUNCH</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/restaurant+near+Echo+Point+Munnar" target="_blank">Roadside restaurant near Echo Point / Kundala</a>
+            <a href="https://www.google.com/maps/search/lunch+echo+point+Munnar" target="_blank" class="map-btn">Find on Maps</a>
+            <span class="tag tag-food">Lunch</span>
+          </div>
+          <div class="stop-note">Small eateries near the Echo Point parking sell Kerala meals, noodles and maggi. Eat a light-medium lunch — Top Station involves some walking. Carry water (no shops at Top Station summit).</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-blue">7</div></div>
+        <div class="stop-content">
+          <div class="stop-time">13:45 – 14:30 — KUNDALA DAM + LAKE</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Kundale+Lake/@10.1440338,77.203868" target="_blank">Kundala Dam & Lake</a>
+            <a href="https://www.google.com/maps/place/Kundale+Lake/@10.1440338,77.203868" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-boat">Shikara Boating</span>
+          </div>
+          <div class="stop-note">Serene high-altitude lake with Kashmiri-style shikara boats and pedal boats. <strong>Carry cash — no mobile signal here.</strong> The forest edge around the lake sometimes has sambar deer in the afternoon. 40-minute stop.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-star">★</div></div>
+        <div class="stop-content">
+          <div class="stop-time">14:30 – 16:30 — TOP STATION (6,300 ft)</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/Top+Station+Munnar" target="_blank">Top Station, Kerala–Tamil Nadu Border</a>
+            <a href="https://www.google.com/maps/search/Top+Station+Munnar+viewpoint" target="_blank" class="map-btn">Find on Maps</a>
+            <span class="tag tag-view">Crown Jewel</span>
+          </div>
+          <div class="stop-note"><strong>Don't skip this.</strong> 44 km from Munnar town, 1 hr drive from Kundala. Walk ~1 km down a trail from the road for the full valley panorama — the Western Ghats fall away dramatically to the Tamil Nadu plains below. Views into three districts. On clear afternoons (April is usually clear), the view stretches 80–100 km. Allow 1.5–2 hrs here.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">9</div></div>
+        <div class="stop-content">
+          <div class="stop-time">16:30 – 17:30 — VATTAVADA VILLAGE (if time allows)</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/Vattavada+village+Munnar" target="_blank">Vattavada Village</a>
+            <a href="https://www.google.com/maps/search/Vattavada+vegetable+farms" target="_blank" class="map-btn">Find on Maps</a>
+            <span class="tag tag-view">Village</span>
+          </div>
+          <div class="stop-note">15 km beyond Top Station on the Bodimettu road. A high-altitude vegetable farming village — carrots, beets, cabbage grown at 7,000 ft. The drive through the valley is stunning. If skipping, head directly back toward Devikulam for check-in.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">🌿</div></div>
+        <div class="stop-content">
+          <div class="stop-time">17:30 – 18:00 — GOV. BOTANICAL GARDEN (optional)</div>
+          <div class="stop-name">
+            <a href="https://maps.app.goo.gl/t7KSN9TvenWiZMku9" target="_blank">Government Botanical Garden, Munnar</a>
+            <a href="https://maps.app.goo.gl/t7KSN9TvenWiZMku9" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-view">Optional</span>
+          </div>
+          <div class="stop-note">Only if energy permits on the return. A maintained garden with exotic hill plants and a rose garden. Closes at 6 PM. Skip if tired and head straight to Mount Elbrus.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-bed">🏠</div></div>
+        <div class="stop-content">
+          <div class="stop-time">~18:30 — NIGHT STAY · DAY 2</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Mount+Elbrus/@10.0638252,77.1097884" target="_blank">Mount Elbrus Homestay, Devikulam</a>
+            <a href="https://maps.app.goo.gl/KU7CRStsRgrhd2rX6" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-stay">Stay ★ 5.0</span>
+          </div>
+          <div class="stop-note">Laksham Colony, Devikulam. Rated a perfect 5 stars — peaceful, beautiful location near Munnar. <strong>Take a good rest tonight.</strong> Tomorrow is an early sunrise start. Ask the host for the fastest route to Door of Heaven.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ DAY 3 ══ -->
+  <div class="day-block">
+    <div class="day-header day3">
+      <div>
+        <div class="day-num">Day 3 + Return Drive</div>
+        <div class="day-title">Sunrise → Anayirankal Circuit → Bodimettu → Chennai</div>
+      </div>
+      <div class="day-date">Apr 5 Sun · Depart night</div>
+    </div>
+    <div class="day-body">
+
+      <div class="info-box info-tip">
+        🌅 <strong>Route:</strong> Door of Heaven (sunrise) → back to room (bath + breakfast) → SkyFall → Lockhart Gap → Anayirangal → Elephant Abode → Anayirankal Dam → Bodimettu → Anai Pillaiyar → <strong>Bodinayakanur → Chennai overnight drive.</strong>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-amber">☀</div></div>
+        <div class="stop-content">
+          <div class="stop-time">05:30 – 06:30 — DOOR OF HEAVEN (SUNRISE)</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Door+of+Heaven/@10.062025,77.118469" target="_blank">Door of Heaven</a>
+            <a href="https://maps.app.goo.gl/N8qosLy7My5GMjF16" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-view">🌅 Sunrise</span>
+          </div>
+          <div class="stop-note">Leave by <strong>5:15 AM</strong> — 5 min drive from Mount Elbrus. A dramatic narrow gap between two hillsides frames the sunrise horizon perfectly. Best viewpoint in the area for golden hour. Cold at dawn — carry a light jacket. Return by 6:30 AM for breakfast.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-food">🍳</div></div>
+        <div class="stop-content">
+          <div class="stop-time">07:00 – 08:00 — BATH + BREAKFAST AT MOUNT ELBRUS</div>
+          <div class="stop-name">Mount Elbrus Homestay · Checkout</div>
+          <div class="stop-note">Freshen up, have breakfast (request the host to arrange the night before), pack bags and checkout. Today is a long exploration day followed by the night drive home.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">1</div></div>
+        <div class="stop-content">
+          <div class="stop-time">08:15 – 09:00 — SKYFALL VIEWPOINT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/SkyFall+Viewpoint/@10.0455988,77.1141036" target="_blank">SkyFall Viewpoint</a>
+            <a href="https://maps.app.goo.gl/EYx7rn56FHAWvyqM9" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-view">Cliff View</span>
+          </div>
+          <div class="stop-note">A dramatic cliff-edge viewpoint south of Devikulam with a near-vertical drop to a valley. Morning light here is excellent. Walk ~300m from road. Stay behind safety barriers — the drop is sheer. 40-minute stop.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">2</div></div>
+        <div class="stop-content">
+          <div class="stop-time">09:15 – 10:00 — LOCKHART GAP VIEW</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Lockhart+Gap+View/@10.0367623,77.1226015" target="_blank">Lockhart Gap Road View</a>
+            <a href="https://maps.app.goo.gl/Dup2bLH38yc5CVwQ8" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-view">Valley View</span>
+          </div>
+          <div class="stop-note">A famous gap in the Cardamom Hills ridge that frames a long valley corridor. Named after the British-era Lockhart road. Morning mist typically still lingers at this elevation at 9 AM — ethereal views. 30–40 minute stop.</div>
+        </div>
+      </div>
+
+      <div class="route-div">
+        <span class="route-arrow">→</span>
+        <span>~25 km toward Anayirankal area · 40 min drive</span>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">3</div></div>
+        <div class="stop-content">
+          <div class="stop-time">10:45 – 11:15 — ANAYIRANGAL VIEW POINT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Anayirangal+View+Point+MUNNAR/@10.0222757,77.1768876" target="_blank">Anayirangal View Point</a>
+            <a href="https://maps.app.goo.gl/1q2xzHKuBZFeCaiL7" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-view">Panorama</span>
+          </div>
+          <div class="stop-note">A large open viewpoint overlooking the Anayirankal reservoir below and the forested ridges of the Periyar Tiger Reserve in the distance. Clear mornings give spectacular layered ridge views. 30 minutes.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-blue">4</div></div>
+        <div class="stop-content">
+          <div class="stop-time">11:20 – 12:00 — ELEPHANT ABODE BOATING CENTER</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Elephant+Abode+Boating+Center/@10.0141159,77.2034571" target="_blank">Elephant Abode Boating Center</a>
+            <a href="https://maps.app.goo.gl/h5afJpaNHdwoAWQc8" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-boat">Boating</span>
+          </div>
+          <div class="stop-note">Motorboat and rowing boat rides on the Anayirankal reservoir with views of the forested shoreline. The area is also a known elephant corridor — keep your eyes on the tree line. 40 minutes including the boat ride.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-blue">5</div></div>
+        <div class="stop-content">
+          <div class="stop-time">12:00 – 12:30 — ANAYIRANKAL DAM</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Anayirankal+Dam/@10.0093789,77.2069091" target="_blank">Anayirankal Dam</a>
+            <a href="https://maps.app.goo.gl/72NSpdeajfDy9JrDA" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-view">Dam View</span>
+          </div>
+          <div class="stop-note">A concrete dam holding back the Anayirankal lake — walk along the dam wall for views of both the reservoir and the forested valley below. Very quiet and uncrowded. 20-minute stop, adjacent to Elephant Abode.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-food">🍽</div></div>
+        <div class="stop-content">
+          <div class="stop-time">12:30 – 13:15 — LUNCH</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/restaurant+near+Anayirankal+Munnar" target="_blank">Restaurant · Anayirankal / Bodimettu Road</a>
+            <a href="https://www.google.com/maps/search/lunch+Bodimettu+Munnar" target="_blank" class="map-btn">Find on Maps</a>
+            <span class="tag tag-food">Lunch</span>
+          </div>
+          <div class="stop-note">Small local eateries along the Bodimettu road. Kerala meals or fried rice available. Eat well — you have a ~5 hr drive to Chennai tonight. Carry water and snacks for the return journey.</div>
+        </div>
+      </div>
+
+      <div class="route-div">
+        <span class="route-arrow">→</span>
+        <span>~20 km toward Bodimettu · 35 min drive on forest road</span>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-amber">6</div></div>
+        <div class="stop-content">
+          <div class="stop-time">13:45 – 14:30 — BODIMETTU VIEW POINT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Bodimettu+View+Point/@10.0182872,77.2658288" target="_blank">Bodimettu View Point</a>
+            <a href="https://maps.app.goo.gl/LZPDcK4m7mcxmhbdA" target="_blank" class="map-btn">Open Maps</a>
+            <span class="tag tag-view">Afternoon View</span>
+          </div>
+          <div class="stop-note">A commanding hilltop viewpoint at the Kerala–Tamil Nadu border ridge. On a clear afternoon you can see the plains of Tamil Nadu stretching far below. The road up is narrow but manageable in the Urban Cruiser. 40-minute stop.</div>
+        </div>
+      </div>
+
+      <div class="route-div">
+        <span class="route-arrow">→</span>
+        <span>~20 km toward Bodinayakanur via Anai Pillaiyar temple road</span>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-amber">7</div></div>
+        <div class="stop-content">
+          <div class="stop-time">15:00 – 16:00 — ANAI PILLAIYAR KOVIL BATHING POINT</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/place/Anai+Pillaiyar+Kovil/@10.0304076,77.3398315" target="_blank">Anai Pillaiyar Kovil Bathing Point</a>
+            <a href="https://maps.app.goo.gl/D1MhGzPiMZnbWnD19" target="_blank" class="map_btn">Open Maps</a>
+            <span class="tag tag-swim">Bathing + Temple</span>
+          </div>
+          <div class="stop-note">A river bathing point below an ancient hill temple — the water flows down from the Munnar hills and is cool and clear. Take a refreshing bath before the long drive home. The temple itself (Lord Ganesh in an elephant form) is worth a quick visit. <strong>Last chance to freshen up before the return drive.</strong></div>
+        </div>
+      </div>
+
+      <div class="route-div">
+        <span class="route-arrow">→</span>
+        <span>~15 km to Bodinayakanur town · 25 min · Fuel up here for Chennai drive</span>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-petrol">⛽</div></div>
+        <div class="stop-content">
+          <div class="stop-time">16:30 – 17:00 — FUEL + DINNER PREP · BODINAYAKANUR</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/search/petrol+bunk+Bodinayakanur" target="_blank">Petrol Bunk + Dinner · Bodinayakanur</a>
+            <a href="https://www.google.com/maps/search/hotel+Bodinayakanur" target="_blank" class="map-btn">Find on Maps</a>
+          </div>
+          <div class="stop-note"><strong>Full tank here</strong> — last major town before the highway. Have a good dinner (~6–7 PM). Bodinayakanur has several hotels on the main road. Stock water, snacks and coffee for the overnight drive. Rest in the car for 30 min before departure.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">🚗</div></div>
+        <div class="stop-content">
+          <div class="stop-time">~20:00 — DEPART FOR CHENNAI</div>
+          <div class="stop-name">
+            <a href="https://www.google.com/maps/dir/Bodinayakanur/Chennai" target="_blank">Bodinayakanur → Chennai</a>
+            <a href="https://www.google.com/maps/dir/Bodinayakanur/Chennai" target="_blank" class="map-btn">Navigation</a>
+            <span class="tag tag-drive">~430 km · ~8 hrs</span>
+          </div>
+          <div class="stop-note">Take <strong>NH38 → Theni → Dindigul → NH44 → Salem → NH48 → Krishnagiri → Chennai</strong>. Drive in 2 shifts — swap driver at Dindigul (~2 hrs in). Target Chennai by <strong>5 AM on April 6</strong>. Drive safely, take breaks every 2 hrs.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-timeline"><div class="stop-dot dot-green">🏠</div></div>
+        <div class="stop-content">
+          <div class="stop-time">~05:00 — ARRIVE CHENNAI</div>
+          <div class="stop-name">Chennai · Home</div>
+          <div class="stop-note">Trip complete. Total distance ~1,100 km · 3 nights · Western Ghats crossed and conquered. 🌿</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div style="margin-top:32px; background: var(--night); border-radius:14px; padding:24px; color:var(--cream);">
+    <div style="font-family:'Playfair Display',serif; font-size:18px; margin-bottom:16px; color:var(--green-mist);">Essential Tips for the Road</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:12.5px; color:rgba(245,240,232,0.75); line-height:1.6;">
+      <div>⛽ <strong style="color:var(--cream);">Fuel:</strong> Fill up at Udumalaipettai (night), Munnar town (Day 1), and Bodinayakanur (return)</div>
+      <div>💧 <strong style="color:var(--cream);">Water:</strong> Carry 5L per person at all times — ghat roads have no shops</div>
+      <div>📶 <strong style="color:var(--cream);">Network:</strong> Airtel/BSNL works best in Munnar hills. Kundala and Top Station have weak/no signal</div>
+      <div>💵 <strong style="color:var(--cream);">Cash:</strong> ATMs in Munnar town only. Carry ₹3,000–5,000 cash for entries and boat rides</div>
+      <div>🥾 <strong style="color:var(--cream);">Footwear:</strong> Waterproof sandals for waterfalls, sports shoes for viewpoint walks</div>
+      <div>🧥 <strong style="color:var(--cream);">Clothing:</strong> Carry a light jacket — sunrise spots (Door of Heaven, Top Station) are 10–14°C</div>
+      <div>🎟 <strong style="color:var(--cream);">Eravikulam:</strong> Book tickets online at eravikulam.org — sell out on weekends</div>
+      <div>🌿 <strong style="color:var(--cream);">Leeches:</strong> Apply Dettol/Savlon on ankles before forest walks at Lakkam and Thoovanam</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Generated for reference · <strong>Urban Cruiser Road Trip · Apr 2–6, 2026</strong> · Chennai ⇌ Munnar · All map links open Google Maps
+</div>
+
+</body>
+</html>
