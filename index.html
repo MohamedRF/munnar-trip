@@ -1480,7 +1480,7 @@
   <!-- ── MEMBER CONTRIBUTIONS ── -->
   <div class="finance-section" style="margin-bottom:40px;">
     <div class="finance-section-header" onclick="toggleSection('memberBody')">
-      <div class="finance-section-title">👥 Member Contributions to Rasik</div>
+      <div class="finance-section-title">👥 Member Contributions (Rasik's Account)</div>
       <div style="display:flex;align-items:center;gap:14px;">
         <span class="finance-section-summary">Collected: <span id="memberCollectedDisplay">₹0</span></span>
         <span style="color:rgba(245,240,232,0.3);font-size:12px;">▾</span>
@@ -1758,11 +1758,11 @@ async function persist() {
 //  TRAVELERS (matches your trip page list)
 // ════════════════════════════════════════════════════════
 const TRAVELERS = [
-  { id: 'rasik',  name: 'Mohamed Rasik Farid', initials: 'MR', isHost: true  },
-  { id: 'palani', name: 'Palani',              initials: 'PA', isHost: false },
-  { id: 'rajesh', name: 'Rajesh',              initials: 'RJ', isHost: false },
-  { id: 'rajesh_singh', name: 'Rajesh Singh',  initials: 'RS', isHost: false },
-  { id: 'senthil',name: 'Senthil',             initials: 'SE', isHost: false },
+  { id: 'rasik',       name: 'Mohamed Rasik Farid', initials: 'MR' },
+  { id: 'palani',      name: 'Palani',               initials: 'PA' },
+  { id: 'rajesh',      name: 'Rajesh',               initials: 'RJ' },
+  { id: 'rajesh_singh',name: 'Rajesh Singh',          initials: 'RS' },
+  { id: 'senthil',     name: 'Senthil',               initials: 'SE' },
 ];
 
 // Finance state
@@ -1785,13 +1785,14 @@ function toggleSection(bodyId) {
 function injectMemberGrid() {
   const grid = document.getElementById('memberGrid');
   grid.innerHTML = '';
-  TRAVELERS.filter(t => !t.isHost).forEach(t => {
+  TRAVELERS.forEach(t => {
+    const isAccountHolder = t.id === 'rasik';
     const row = document.createElement('div');
     row.className = 'member-row';
     row.id = 'mrow_' + t.id;
     row.innerHTML = `
-      <div class="member-avatar">${t.initials}</div>
-      <div class="member-name">${t.name}</div>
+      <div class="member-avatar" style="${isAccountHolder ? 'background:var(--amber);color:var(--night);' : ''}">${t.initials}</div>
+      <div class="member-name">${t.name}${isAccountHolder ? ' <span style="font-size:10px;background:rgba(212,137,26,0.2);color:var(--amber-light);padding:2px 7px;border-radius:8px;font-family:\'DM Mono\',monospace;">Account holder</span>' : ''}</div>
       <div class="member-fields">
         <input type="number" id="mpaid_${t.id}" placeholder="₹ paid" min="0" step="1"
           oninput="updateMemberStatus('${t.id}')" onchange="saveMemberContrib('${t.id}')">
@@ -1864,17 +1865,16 @@ function getPerPersonShare() {
 function updatePerPersonShare() {
   const share = getPerPersonShare();
   document.getElementById('per_person_share').textContent = share > 0 ? '₹' + share.toLocaleString('en-IN') : '₹0';
-  // Re-check all statuses
-  TRAVELERS.filter(t => !t.isHost).forEach(t => updateMemberStatus(t.id));
+  TRAVELERS.forEach(t => updateMemberStatus(t.id));
 }
 
 function updateMemberSummary() {
   let collected = 0;
-  TRAVELERS.filter(t => !t.isHost).forEach(t => {
+  TRAVELERS.forEach(t => {
     collected += parseFloat(document.getElementById('mpaid_' + t.id)?.value) || 0;
   });
   const share = getPerPersonShare();
-  const expected = share * (TRAVELERS.length - 1); // exclude host
+  const expected = share * TRAVELERS.length;
   document.getElementById('total_collected').textContent   = '₹' + collected.toLocaleString('en-IN');
   document.getElementById('total_pending').textContent     = '₹' + Math.max(0, expected - collected).toLocaleString('en-IN');
   document.getElementById('memberCollectedDisplay').textContent = '₹' + collected.toLocaleString('en-IN');
