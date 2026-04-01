@@ -1850,13 +1850,25 @@ function applyFinanceStateToUI() {
 }
 
 // ════════════════════════════════════════════════════════
-//  PERSISTENCE (DB + LocalStorage)
+//  PERSISTENCE (DB + LocalStorage + Auto-Sync)
 // ════════════════════════════════════════════════════════
 async function persist() {
-  if (db) {
-    await saveToSupabase();
+  // 1. ALWAYS save locally first so you never lose data
+  saveToLocalStorage();
+
+  // 2. If online and Supabase is setup, push to the cloud
+  if (navigator.onLine && db) {
+    try {
+      await saveToSupabase();
+      document.getElementById('dbDot').classList.add('connected');
+      document.getElementById('dbLabel').textContent = 'Supabase connected ✓';
+    } catch (e) {
+      document.getElementById('dbDot').classList.remove('connected');
+      document.getElementById('dbLabel').textContent = 'Offline (Saved locally)';
+    }
   } else {
-    saveToLocalStorage();
+    document.getElementById('dbDot').classList.remove('connected');
+    document.getElementById('dbLabel').textContent = 'Offline (Saved locally)';
   }
 }
 
@@ -1883,7 +1895,8 @@ async function saveToSupabase() {
       finance: financeState,
       updated_at: new Date().toISOString()
     }, { onConflict: 'trip_id' });
-  if (error) console.error('Supabase save error:', error);
+  
+  if (error) throw error; // Throw error so persist() knows it failed
 }
 
 function loadFromLocalStorage() {
@@ -1902,6 +1915,28 @@ function saveToLocalStorage() {
     localStorage.setItem('trip_' + TRIP_ID, JSON.stringify({ tripState, financeState }));
   } catch(e) {}
 }
+
+// ════════════════════════════════════════════════════════
+//  AUTO-SYNC WHEN INTERNET RECONNECTS
+// ════════════════════════════════════════════════════════
+window.addEventListener('online', async () => {
+  document.getElementById('dbLabel').textContent = 'Syncing to cloud...';
+  if (db) {
+    try {
+      // Push the latest local storage data up to Supabase
+      await saveToSupabase();
+      document.getElementById('dbDot').classList.add('connected');
+      document.getElementById('dbLabel').textContent = 'Supabase connected & Synced ✓';
+    } catch (e) {
+      document.getElementById('dbLabel').textContent = 'Sync failed. Retrying later.';
+    }
+  }
+});
+
+window.addEventListener('offline', () => {
+  document.getElementById('dbDot').classList.remove('connected');
+  document.getElementById('dbLabel').textContent = 'Offline (Saving locally)';
+});
 </script>
 
 </body>
