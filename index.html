@@ -568,9 +568,130 @@
     .fund-stat.balance { border-left: none; padding-left: 0; padding-top: 12px; border-top: 1px dashed rgba(255,255,255,0.1); width: 100%; }
     .fund-operator { display: none; }
   }
+
+  /* ── PASSWORD OVERLAY ── */
+  #lockOverlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: linear-gradient(160deg, #0b1a13 0%, #122118 60%, #0a150f 100%);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+  }
+  #lockOverlay::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 50% at 10% -10%, rgba(74,140,92,0.2) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 90% 110%, rgba(212,137,26,0.1) 0%, transparent 60%);
+  }
+  .lock-box {
+    position: relative;
+    background: rgba(18,33,24,0.9);
+    border: 1px solid rgba(125,191,142,0.2);
+    border-radius: 20px;
+    padding: 48px 40px 40px;
+    width: 100%; max-width: 360px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+    backdrop-filter: blur(16px);
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+    text-align: center;
+  }
+  .lock-icon {
+    font-size: 40px; margin-bottom: 18px;
+    animation: lock-pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes lock-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.85; }
+  }
+  .lock-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700; color: #f8f6f0;
+    margin-bottom: 6px; letter-spacing: -0.02em;
+  }
+  .lock-title em { font-style: italic; color: var(--green-mist); }
+  .lock-sub {
+    font-size: 12px; color: rgba(245,240,232,0.4);
+    font-family: 'DM Mono', monospace; margin-bottom: 32px;
+    letter-spacing: 0.05em;
+  }
+  .lock-input-wrap { position: relative; width: 100%; margin-bottom: 14px; }
+  #lockInput {
+    width: 100%;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(125,191,142,0.25);
+    border-radius: 12px;
+    padding: 14px 48px 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 20px; letter-spacing: 0.3em;
+    color: var(--cream); outline: none;
+    text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  #lockInput:focus {
+    border-color: rgba(125,191,142,0.6);
+    box-shadow: 0 0 0 3px rgba(125,191,142,0.12);
+  }
+  #lockInput.error {
+    border-color: rgba(255,107,107,0.7) !important;
+    box-shadow: 0 0 0 3px rgba(255,107,107,0.1) !important;
+    animation: shake 0.35s ease;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    60% { transform: translateX(8px); }
+    80% { transform: translateX(-4px); }
+  }
+  .lock-toggle {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; color: rgba(245,240,232,0.3);
+    font-size: 16px; cursor: pointer; padding: 4px; line-height: 1;
+    transition: color 0.2s;
+  }
+  .lock-toggle:hover { color: rgba(245,240,232,0.7); transform: translateY(-50%) translateY(0); }
+  #lockBtn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+    color: white; border: none; border-radius: 12px;
+    padding: 14px; font-size: 14px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s ease;
+    box-shadow: 0 4px 16px rgba(45,90,61,0.3);
+  }
+  #lockBtn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,90,61,0.4); }
+  #lockBtn:active { transform: translateY(0); }
+  #lockError {
+    font-size: 11px; font-family: 'DM Mono', monospace;
+    color: #ff8a8a; margin-top: 12px; opacity: 0;
+    transition: opacity 0.2s; min-height: 16px;
+  }
+  #lockError.visible { opacity: 1; }
+  .lock-footer {
+    margin-top: 28px; font-size: 10px;
+    color: rgba(245,240,232,0.2); font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+  }
 </style>
 </head>
 <body>
+
+<!-- ── PASSWORD OVERLAY ── -->
+<div id="lockOverlay">
+  <div class="lock-box">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">Chennai → <em>Munnar</em></div>
+    <div class="lock-sub">TRIP REFERENCE · APR 2–6, 2026</div>
+    <div class="lock-input-wrap">
+      <input id="lockInput" type="password" placeholder="· · · ·" maxlength="20"
+        onkeydown="if(event.key==='Enter') unlockPage()"
+        oninput="document.getElementById('lockInput').classList.remove('error'); document.getElementById('lockError').classList.remove('visible');">
+      <button class="lock-toggle" onclick="toggleLockVis()" id="lockToggle" title="Show/hide">👁</button>
+    </div>
+    <button id="lockBtn" onclick="unlockPage()">Unlock →</button>
+    <div id="lockError">Incorrect password. Try again.</div>
+    <div class="lock-footer">🚗 URBAN CRUISER ROAD TRIP</div>
+  </div>
+</div>
+
 
 <!-- ── STICKY TRACKER BAR ── -->
 <div class="tracker-bar" id="trackerBar">
@@ -1428,6 +1549,52 @@
 </div>
 
 <script>
+
+  
+// ── PASSWORD LOCK ──
+(function() {
+  const PASS = '1124';
+  const SESSION_KEY = 'trip_unlocked_munnar2026';
+
+  function unlockPage() {
+    const val = document.getElementById('lockInput').value;
+    if (val === PASS) {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      document.getElementById('lockOverlay').style.display = 'none';
+    } else {
+      const inp = document.getElementById('lockInput');
+      inp.classList.add('error');
+      document.getElementById('lockError').classList.add('visible');
+      inp.value = '';
+      setTimeout(() => inp.focus(), 50);
+    }
+  }
+
+  function toggleLockVis() {
+    const inp = document.getElementById('lockInput');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+  }
+
+  window.unlockPage = unlockPage;
+  window.toggleLockVis = toggleLockVis;
+
+  // Check session — if already unlocked this session, skip overlay
+  if (sessionStorage.getItem(SESSION_KEY) === '1') {
+    document.addEventListener('DOMContentLoaded', () => {
+      const ov = document.getElementById('lockOverlay');
+      if (ov) ov.style.display = 'none';
+    });
+  } else {
+    // Auto-focus the input when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const inp = document.getElementById('lockInput');
+        if (inp) inp.focus();
+      }, 100);
+    });
+  }
+})();
+
 // ════════════════════════════════════════════════════════
 //  SUPABASE CONFIG (Replace with your actual keys if you have them)
 // ════════════════════════════════════════════════════════
