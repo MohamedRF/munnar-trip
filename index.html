@@ -688,6 +688,171 @@
   }
   .member-save-btn:hover { background: var(--green-deep); }
 
+  /* Entry log inside each member card */
+  .member-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(74,140,92,0.12);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .member-card:last-child { margin-bottom: 0; }
+  .member-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .member-card-header:hover { background: rgba(255,255,255,0.03); }
+  .member-card-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .member-total-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--amber-light);
+    font-weight: 600;
+  }
+  .member-expand-icon {
+    font-size: 11px;
+    color: rgba(245,240,232,0.3);
+    transition: transform 0.2s;
+  }
+  .member-expand-icon.open { transform: rotate(180deg); }
+
+  /* Add entry form */
+  .member-add-form {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 10px 14px;
+    background: rgba(0,0,0,0.15);
+    border-top: 1px solid rgba(74,140,92,0.1);
+  }
+  .entry-type-toggle {
+    display: flex;
+    border-radius: 7px;
+    overflow: hidden;
+    border: 1px solid rgba(74,140,92,0.25);
+    flex-shrink: 0;
+  }
+  .entry-type-btn {
+    padding: 5px 10px;
+    font-size: 10px;
+    font-weight: 500;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: rgba(245,240,232,0.45);
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .entry-type-btn.active-to-account {
+    background: rgba(74,140,92,0.3);
+    color: var(--green-mist);
+  }
+  .entry-type-btn.active-direct-spend {
+    background: rgba(212,137,26,0.25);
+    color: var(--amber-light);
+  }
+  .member-add-form input[type="number"],
+  .member-add-form input[type="text"] {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    border: 1px solid rgba(74,140,92,0.25);
+    border-radius: 7px;
+    padding: 5px 10px;
+    background: rgba(255,255,255,0.05);
+    color: var(--cream);
+    outline: none;
+  }
+  .member-add-form input[type="number"] { width: 110px; }
+  .member-add-form input[type="text"]   { flex: 1; min-width: 130px; }
+  .member-add-form input:focus { border-color: var(--green-light); }
+  .add-entry-btn {
+    background: var(--green-mid);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+  .add-entry-btn:hover { background: var(--green-deep); }
+
+  /* Entry list */
+  .member-entries {
+    border-top: 1px solid rgba(74,140,92,0.08);
+  }
+  .entry-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    flex-wrap: wrap;
+  }
+  .entry-row:last-child { border-bottom: none; }
+  .entry-type-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-to-account   { background: var(--green-mist); }
+  .dot-direct-spend { background: var(--amber-light); }
+  .entry-desc {
+    flex: 1;
+    font-size: 12px;
+    color: rgba(245,240,232,0.7);
+    min-width: 100px;
+  }
+  .entry-amt {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .entry-amt.to-account   { color: var(--green-mist); }
+  .entry-amt.direct-spend { color: var(--amber-light); }
+  .entry-ts {
+    font-size: 10px;
+    color: rgba(245,240,232,0.25);
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+  }
+  .entry-delete {
+    background: none;
+    border: none;
+    color: rgba(245,240,232,0.2);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0 2px;
+    line-height: 1;
+    transition: color 0.15s;
+  }
+  .entry-delete:hover { color: #f08080; }
+  .entry-type-label {
+    font-size: 9px;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 6px;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+  .label-to-account   { background: rgba(74,140,92,0.2);  color: var(--green-mist); }
+  .label-direct-spend { background: rgba(212,137,26,0.2); color: var(--amber-light); }
+
   /* Summary bar inside finance */
   .finance-summary-bar {
     display: flex;
@@ -1434,7 +1599,7 @@
             <input type="number" id="cw_advance" placeholder="0" oninput="updateStayCalc('cw')" onchange="saveFinance()">
           </label>
           <label>Paid By
-            <input type="text" id="cw_paidby" placeholder="e.g. Rasik" style="width:130px;" onchange="saveFinance()">
+            <input type="text" id="cw_paidby" placeholder="e.g. Mohamed Rasik" style="width:130px;" onchange="saveFinance()">
           </label>
         </div>
         <div class="stay-total-display" id="cw_display"></div>
@@ -1454,7 +1619,7 @@
             <input type="number" id="me_advance" placeholder="0" oninput="updateStayCalc('me')" onchange="saveFinance()">
           </label>
           <label>Paid By
-            <input type="text" id="me_paidby" placeholder="e.g. Rasik" style="width:130px;" onchange="saveFinance()">
+            <input type="text" id="me_paidby" placeholder="e.g. Mohamed Rasik" style="width:130px;" onchange="saveFinance()">
           </label>
         </div>
         <div class="stay-total-display" id="me_display"></div>
@@ -1480,7 +1645,7 @@
   <!-- ── MEMBER CONTRIBUTIONS ── -->
   <div class="finance-section" style="margin-bottom:40px;">
     <div class="finance-section-header" onclick="toggleSection('memberBody')">
-      <div class="finance-section-title">👥 Member Contributions (Rasik's Account)</div>
+      <div class="finance-section-title">👥 Member Contributions (Mohamed Rasik's Account)</div>
       <div style="display:flex;align-items:center;gap:14px;">
         <span class="finance-section-summary">Collected: <span id="memberCollectedDisplay">₹0</span></span>
         <span style="color:rgba(245,240,232,0.3);font-size:12px;">▾</span>
@@ -1496,8 +1661,12 @@
           <div class="finance-summary-value" id="per_person_share">₹0</div>
         </div>
         <div class="finance-summary-item">
-          <div class="finance-summary-label">Total Collected</div>
+          <div class="finance-summary-label">Collected to Account</div>
           <div class="finance-summary-value green" id="total_collected">₹0</div>
+        </div>
+        <div class="finance-summary-item">
+          <div class="finance-summary-label">Direct Spends</div>
+          <div class="finance-summary-value" style="color:var(--amber-light);" id="total_direct_spend">₹0</div>
         </div>
         <div class="finance-summary-item">
           <div class="finance-summary-label">Still Pending</div>
@@ -1780,29 +1949,147 @@ function toggleSection(bodyId) {
 }
 
 // ════════════════════════════════════════════════════════
-//  INJECT MEMBER ROWS
+//  MEMBER ENTRY TYPE STATE
+// ════════════════════════════════════════════════════════
+const memberEntryType = {}; // per-person current entry type toggle
+
+// ════════════════════════════════════════════════════════
+//  INJECT MEMBER CARDS (multi-entry)
 // ════════════════════════════════════════════════════════
 function injectMemberGrid() {
   const grid = document.getElementById('memberGrid');
   grid.innerHTML = '';
   TRAVELERS.forEach(t => {
     const isAccountHolder = t.id === 'rasik';
-    const row = document.createElement('div');
-    row.className = 'member-row';
-    row.id = 'mrow_' + t.id;
-    row.innerHTML = `
-      <div class="member-avatar" style="${isAccountHolder ? 'background:var(--amber);color:var(--night);' : ''}">${t.initials}</div>
-      <div class="member-name">${t.name}${isAccountHolder ? ' <span style="font-size:10px;background:rgba(212,137,26,0.2);color:var(--amber-light);padding:2px 7px;border-radius:8px;font-family:\'DM Mono\',monospace;">Account holder</span>' : ''}</div>
-      <div class="member-fields">
-        <input type="number" id="mpaid_${t.id}" placeholder="₹ paid" min="0" step="1"
-          oninput="updateMemberStatus('${t.id}')" onchange="saveMemberContrib('${t.id}')">
-        <span class="member-status status-unpaid" id="mstatus_${t.id}">Not paid</span>
-      </div>
-      <button class="member-save-btn" onclick="saveMemberContrib('${t.id}')">Save</button>
-      <span style="font-size:10px;color:rgba(245,240,232,0.3);font-family:'DM Mono',monospace;" id="mts_${t.id}"></span>
-    `;
-    grid.appendChild(row);
+    const card = document.createElement('div');
+    card.className = 'member-card';
+    card.id = 'mcard_' + t.id;
+    const ahBadge = isAccountHolder
+      ? ` <span style="font-size:10px;background:rgba(212,137,26,0.2);color:var(--amber-light);padding:2px 6px;border-radius:6px;font-family:'DM Mono',monospace;">Account holder</span>`
+      : '';
+    const avatarStyle = isAccountHolder ? 'background:var(--amber);color:var(--night);' : '';
+    card.innerHTML =
+      '<div class="member-card-header" onclick="toggleMemberCard(\'' + t.id + '\')">' +
+        '<div class="member-avatar" style="' + avatarStyle + '">' + t.initials + '</div>' +
+        '<div>' +
+          '<div class="member-name" style="margin:0;font-size:13px;">' + t.name + ahBadge + '</div>' +
+          '<div style="font-size:10px;color:rgba(245,240,232,0.35);font-family:\'DM Mono\',monospace;margin-top:2px;" id="msubline_' + t.id + '">No entries yet</div>' +
+        '</div>' +
+        '<div class="member-card-right">' +
+          '<span class="member-status status-unpaid" id="mstatus_' + t.id + '">Not paid</span>' +
+          '<span class="member-total-chip" id="mtotal_' + t.id + '">₹0</span>' +
+          '<span class="member-expand-icon" id="mexpicon_' + t.id + '">▾</span>' +
+        '</div>' +
+      '</div>' +
+      '<div id="mbody_' + t.id + '" style="display:none;">' +
+        '<div class="member-add-form">' +
+          '<div class="entry-type-toggle">' +
+            '<button class="entry-type-btn active-to-account" id="btnAcc_' + t.id + '" onclick="setEntryType(\'' + t.id + '\',\'to-account\')">💳 To Account</button>' +
+            '<button class="entry-type-btn" id="btnDirect_' + t.id + '" onclick="setEntryType(\'' + t.id + '\',\'direct-spend\')">💵 Direct Spend</button>' +
+          '</div>' +
+          '<input type="number" id="mnewamt_' + t.id + '" placeholder="₹ amount" min="0" step="1">' +
+          '<input type="text" id="mnewnote_' + t.id + '" placeholder="Note (toll, entry, chai…)">' +
+          '<button class="add-entry-btn" onclick="addMemberEntry(\'' + t.id + '\')">+ Add</button>' +
+        '</div>' +
+        '<div class="member-entries" id="mentries_' + t.id + '">' +
+          '<div style="padding:12px 14px;font-size:12px;color:rgba(245,240,232,0.25);font-style:italic;">No entries yet</div>' +
+        '</div>' +
+      '</div>';
+    grid.appendChild(card);
+    memberEntryType[t.id] = 'to-account';
   });
+}
+
+// ════════════════════════════════════════════════════════
+//  TOGGLE MEMBER CARD EXPAND
+// ════════════════════════════════════════════════════════
+function toggleMemberCard(id) {
+  const body = document.getElementById('mbody_' + id);
+  const icon = document.getElementById('mexpicon_' + id);
+  const open = body.style.display === 'none';
+  body.style.display = open ? '' : 'none';
+  icon.classList.toggle('open', open);
+}
+
+// ════════════════════════════════════════════════════════
+//  ENTRY TYPE TOGGLE
+// ════════════════════════════════════════════════════════
+function setEntryType(id, type) {
+  memberEntryType[id] = type;
+  const btnAcc    = document.getElementById('btnAcc_' + id);
+  const btnDirect = document.getElementById('btnDirect_' + id);
+  btnAcc.className    = 'entry-type-btn' + (type === 'to-account'   ? ' active-to-account'   : '');
+  btnDirect.className = 'entry-type-btn' + (type === 'direct-spend' ? ' active-direct-spend' : '');
+}
+
+// ════════════════════════════════════════════════════════
+//  ADD ENTRY
+// ════════════════════════════════════════════════════════
+async function addMemberEntry(id) {
+  const amt  = parseFloat(document.getElementById('mnewamt_' + id).value) || 0;
+  const note = document.getElementById('mnewnote_' + id).value.trim();
+  if (amt <= 0) { document.getElementById('mnewamt_' + id).focus(); return; }
+  const type = memberEntryType[id] || 'to-account';
+  const ts   = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour12: true });
+  const entry = { id: Date.now(), type, amt, note: note || '—', ts };
+
+  if (!financeState.members) financeState.members = {};
+  if (!financeState.members[id]) financeState.members[id] = { entries: [] };
+  if (!financeState.members[id].entries) financeState.members[id].entries = [];
+  financeState.members[id].entries.push(entry);
+
+  // Clear inputs
+  document.getElementById('mnewamt_' + id).value  = '';
+  document.getElementById('mnewnote_' + id).value = '';
+
+  renderMemberEntries(id);
+  updateMemberChip(id);
+  updateMemberSummary();
+  await persist();
+}
+
+// ════════════════════════════════════════════════════════
+//  DELETE ENTRY
+// ════════════════════════════════════════════════════════
+async function deleteMemberEntry(memberId, entryId) {
+  if (!financeState.members?.[memberId]?.entries) return;
+  financeState.members[memberId].entries = financeState.members[memberId].entries.filter(e => e.id !== entryId);
+  renderMemberEntries(memberId);
+  updateMemberChip(memberId);
+  updateMemberSummary();
+  await persist();
+}
+
+// ════════════════════════════════════════════════════════
+//  RENDER ENTRIES LIST
+// ════════════════════════════════════════════════════════
+function renderMemberEntries(id) {
+  const container = document.getElementById('mentries_' + id);
+  const entries   = financeState.members?.[id]?.entries || [];
+  if (entries.length === 0) {
+    container.innerHTML = '<div style="padding:12px 14px;font-size:12px;color:rgba(245,240,232,0.25);font-style:italic;">No entries yet</div>';
+    document.getElementById('msubline_' + id).textContent = 'No entries yet';
+    return;
+  }
+  const toAcc   = entries.filter(e => e.type === 'to-account').reduce((s,e) => s + e.amt, 0);
+  const direct  = entries.filter(e => e.type === 'direct-spend').reduce((s,e) => s + e.amt, 0);
+  const parts   = [];
+  if (toAcc  > 0) parts.push('₹' + toAcc.toLocaleString('en-IN') + ' to account');
+  if (direct > 0) parts.push('₹' + direct.toLocaleString('en-IN') + ' direct');
+  document.getElementById('msubline_' + id).textContent = parts.join(' · ') + '  (' + entries.length + ' entries)';
+
+  container.innerHTML = entries.slice().reverse().map(e =>
+    '<div class="entry-row">' +
+      '<div class="entry-type-dot ' + (e.type === 'to-account' ? 'dot-to-account' : 'dot-direct-spend') + '"></div>' +
+      '<span class="entry-type-label ' + (e.type === 'to-account' ? 'label-to-account' : 'label-direct-spend') + '">' +
+        (e.type === 'to-account' ? 'To Account' : 'Direct') +
+      '</span>' +
+      '<span class="entry-desc">' + e.note + '</span>' +
+      '<span class="entry-amt ' + (e.type === 'to-account' ? 'to-account' : 'direct-spend') + '">₹' + e.amt.toLocaleString('en-IN') + '</span>' +
+      '<span class="entry-ts">' + e.ts + '</span>' +
+      '<button class="entry-delete" onclick="deleteMemberEntry(\'' + id + '\',' + e.id + ')" title="Delete">✕</button>' +
+    '</div>'
+  ).join('');
 }
 
 // ════════════════════════════════════════════════════════
@@ -1840,20 +2127,33 @@ function updateAdvanceTotalDisplay() {
 }
 
 // ════════════════════════════════════════════════════════
-//  MEMBER STATUS + SUMMARY
+//  MEMBER CHIP + STATUS (reads from entries)
 // ════════════════════════════════════════════════════════
-function updateMemberStatus(id) {
-  const paid = parseFloat(document.getElementById('mpaid_' + id).value) || 0;
+function getMemberTotals(id) {
+  const entries = financeState.members?.[id]?.entries || [];
+  const toAccount   = entries.filter(e => e.type === 'to-account').reduce((s,e) => s + e.amt, 0);
+  const directSpend = entries.filter(e => e.type === 'direct-spend').reduce((s,e) => s + e.amt, 0);
+  return { toAccount, directSpend, total: toAccount + directSpend };
+}
+
+function updateMemberChip(id) {
+  const { toAccount, directSpend, total } = getMemberTotals(id);
   const share = getPerPersonShare();
+  const chipEl   = document.getElementById('mtotal_' + id);
   const statusEl = document.getElementById('mstatus_' + id);
-  if (paid <= 0) {
-    statusEl.className = 'member-status status-unpaid'; statusEl.textContent = 'Not paid';
-  } else if (paid >= share && share > 0) {
-    statusEl.className = 'member-status status-paid'; statusEl.textContent = '✓ Paid';
-  } else {
-    statusEl.className = 'member-status status-partial'; statusEl.textContent = 'Partial';
+  if (chipEl) chipEl.textContent = '₹' + total.toLocaleString('en-IN');
+  if (statusEl) {
+    if (total <= 0) {
+      statusEl.className = 'member-status status-unpaid'; statusEl.textContent = 'Not paid';
+    } else if (toAccount >= share && share > 0) {
+      statusEl.className = 'member-status status-paid'; statusEl.textContent = '✓ Paid';
+    } else if (toAccount > 0) {
+      statusEl.className = 'member-status status-partial'; statusEl.textContent = 'Partial';
+    } else {
+      // only direct spend, nothing to account
+      statusEl.className = 'member-status status-partial'; statusEl.textContent = 'Direct only';
+    }
   }
-  updateMemberSummary();
 }
 
 function getPerPersonShare() {
@@ -1865,26 +2165,31 @@ function getPerPersonShare() {
 function updatePerPersonShare() {
   const share = getPerPersonShare();
   document.getElementById('per_person_share').textContent = share > 0 ? '₹' + share.toLocaleString('en-IN') : '₹0';
-  TRAVELERS.forEach(t => updateMemberStatus(t.id));
+  TRAVELERS.forEach(t => updateMemberChip(t.id));
 }
 
 function updateMemberSummary() {
-  let collected = 0;
+  let toAccTotal = 0, directTotal = 0;
   TRAVELERS.forEach(t => {
-    collected += parseFloat(document.getElementById('mpaid_' + t.id)?.value) || 0;
+    const tots = getMemberTotals(t.id);
+    toAccTotal  += tots.toAccount;
+    directTotal += tots.directSpend;
   });
-  const share = getPerPersonShare();
+  const share    = getPerPersonShare();
   const expected = share * TRAVELERS.length;
-  document.getElementById('total_collected').textContent   = '₹' + collected.toLocaleString('en-IN');
-  document.getElementById('total_pending').textContent     = '₹' + Math.max(0, expected - collected).toLocaleString('en-IN');
-  document.getElementById('memberCollectedDisplay').textContent = '₹' + collected.toLocaleString('en-IN');
+  const collected = toAccTotal + directTotal;
+  document.getElementById('total_collected').textContent   = '₹' + toAccTotal.toLocaleString('en-IN');
+  document.getElementById('total_pending').textContent     = '₹' + Math.max(0, expected - toAccTotal).toLocaleString('en-IN');
+  document.getElementById('memberCollectedDisplay').textContent = '₹' + toAccTotal.toLocaleString('en-IN');
+  // Update direct spend display if element exists
+  const dsEl = document.getElementById('total_direct_spend');
+  if (dsEl) dsEl.textContent = '₹' + directTotal.toLocaleString('en-IN');
 }
 
 // ════════════════════════════════════════════════════════
 //  SAVE / LOAD FINANCE STATE
 // ════════════════════════════════════════════════════════
 async function saveFinance() {
-  // Read stays
   ['cw','me'].forEach(k => {
     financeState.stays[k] = {
       total:   parseFloat(document.getElementById(k+'_total').value)   || 0,
@@ -1894,17 +2199,6 @@ async function saveFinance() {
   });
   updateStaySummary();
   updateAdvanceTotalDisplay();
-  await persist();
-}
-
-async function saveMemberContrib(id) {
-  const paid = parseFloat(document.getElementById('mpaid_' + id).value) || 0;
-  const ts   = new Date().toLocaleString('en-IN', { timeZone:'Asia/Kolkata', hour12:true });
-  if (!financeState.members) financeState.members = {};
-  financeState.members[id] = { paid, ts };
-  document.getElementById('mts_' + id).textContent = 'Saved ' + ts;
-  updateMemberStatus(id);
-  updateMemberSummary();
   await persist();
 }
 
@@ -1923,18 +2217,11 @@ function applyFinanceStateToUI() {
     });
   }
 
-  // Members
-  if (financeState.members) {
-    Object.entries(financeState.members).forEach(([id, data]) => {
-      const el = document.getElementById('mpaid_' + id);
-      if (el) {
-        el.value = data.paid || '';
-        const tsEl = document.getElementById('mts_' + id);
-        if (tsEl && data.ts) tsEl.textContent = 'Saved ' + data.ts;
-        updateMemberStatus(id);
-      }
-    });
-  }
+  // Members — render entries and chips
+  TRAVELERS.forEach(t => {
+    renderMemberEntries(t.id);
+    updateMemberChip(t.id);
+  });
   updateMemberSummary();
   updateStaySummary();
   updateAdvanceTotalDisplay();
