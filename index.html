@@ -52,46 +52,114 @@
   input { transition: all 0.2s ease; }
   input:focus { outline: none; border-color: var(--green-light) !important; box-shadow: var(--shadow-focus); }
 
-  /* HEADER */
+   /* HEADER */
   .hero {
-    /* background: var(--night); */
-     background: linear-gradient(rgba(11, 26, 19, 0.6), rgba(11, 26, 19, 0.85)), 
+    background: linear-gradient(160deg, rgba(8,20,14,0.72) 0%, rgba(11,26,19,0.88) 60%, rgba(6,16,11,0.95) 100%),
                 url('header.jpg') center/cover no-repeat;
     color: var(--cream);
-    padding: 56px 24px 48px;
+    padding: 64px 24px 56px;
     position: relative;
     overflow: hidden;
   }
+  /* Decorative orbs */
   .hero::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 30% 0%, rgba(74,140,92,0.2) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 100%, rgba(45,90,61,0.25) 0%, transparent 50%);
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 50% at 10% -10%, rgba(74,140,92,0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 90% 110%, rgba(212,137,26,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 30% at 75% 20%, rgba(125,191,142,0.08) 0%, transparent 55%);
+  }
+  /* Thin shimmer line at bottom */
+  .hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(125,191,142,0.4), rgba(212,137,26,0.3), transparent);
   }
   .hero-inner { position: relative; max-width: 680px; margin: 0 auto; }
-  .hero-badge {
-    display: inline-block;
-    background: rgba(125,191,142,0.15);
-    border: 1px solid rgba(125,191,142,0.3);
-    color: var(--green-mist);
-    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
-    text-transform: uppercase; padding: 6px 14px;
-    border-radius: 20px; margin-bottom: 20px;
-    backdrop-filter: blur(4px);
+
+  /* Top meta row */
+  .hero-meta-row {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 28px; flex-wrap: wrap;
   }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(125,191,142,0.12);
+    border: 1px solid rgba(125,191,142,0.28);
+    color: var(--green-mist);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 5px 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+  }
+  .hero-date-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(212,137,26,0.1);
+    border: 1px solid rgba(212,137,26,0.25);
+    color: var(--amber-light);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 5px 12px;
+    border-radius: 20px; backdrop-filter: blur(8px);
+  }
+
+  /* Title */
   .hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 38px; font-weight: 700; line-height: 1.15;
-    margin-bottom: 12px; letter-spacing: -0.02em;
+    font-size: 44px; font-weight: 700; line-height: 1.1;
+    margin-bottom: 6px; letter-spacing: -0.03em;
   }
   .hero h1 em { font-style: italic; color: var(--green-mist); }
   .hero-sub {
-    color: rgba(245,240,232,0.7); font-size: 15px;
-    font-weight: 400; margin-bottom: 32px;
+    color: rgba(245,240,232,0.55); font-size: 14px;
+    font-weight: 400; margin-bottom: 32px; letter-spacing: 0.01em;
   }
-  .hero-stats { display: flex; gap: 28px; flex-wrap: wrap; }
-  .stat { display: flex; flex-direction: column; gap: 4px; }
-  .stat-val { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--amber-light); }
-  .stat-lbl { font-size: 11px; color: rgba(245,240,232,0.5); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500;}
+
+  /* Travelers */
+  .hero-travelers-block {
+    display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px;
+  }
+  .hero-travelers-label {
+    font-size: 10px; font-weight: 700; color: rgba(245,240,232,0.35);
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .hero-travelers-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .traveler-chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px; padding: 5px 12px 5px 6px;
+    backdrop-filter: blur(6px); transition: background 0.2s;
+  }
+  .traveler-chip:hover { background: rgba(125,191,142,0.1); border-color: rgba(125,191,142,0.25); }
+  .traveler-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; color: white;
+    flex-shrink: 0;
+  }
+  .traveler-name { font-size: 13px; font-weight: 500; color: rgba(245,240,232,0.9); }
+
+  /* Stats */
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: rgba(255,255,255,0.06);
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+  }
+  .stat {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4px; padding: 18px 12px; background: rgba(0,0,0,0.25);
+    transition: background 0.2s;
+  }
+  .stat:hover { background: rgba(125,191,142,0.08); }
+  .stat-val {
+    font-family: 'DM Mono', monospace; font-size: 26px; font-weight: 500;
+    color: var(--amber-light); line-height: 1;
+  }
+  .stat-lbl {
+    font-size: 10px; color: rgba(245,240,232,0.4);
+    text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; text-align: center;
+  }
 
   /* BODY */
   .container { max-width: 680px; margin: 0 auto; padding: 0 16px 60px; }
@@ -322,9 +390,34 @@
   .expense-panel-btn:hover { background: rgba(125,191,142,0.25); color: #fff; }
 
   /* ── DB STATUS ── */
-  .db-status { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-family: 'DM Mono', monospace; color: rgba(245,240,232,0.4); }
-  .db-dot { width: 6px; height: 6px; border-radius: 50%; background: #ff6b6b; flex-shrink: 0; }
-  .db-dot.connected { background: var(--green-mist); box-shadow: 0 0 8px rgba(125,191,142,0.6); }
+  .db-status {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-family: 'DM Mono', monospace; font-weight: 600;
+    padding: 6px 12px; border-radius: 20px; border: 1px solid rgba(255,107,107,0.4);
+    background: rgba(255,107,107,0.1); color: #ff9a9a;
+    transition: all 0.4s ease;
+  }
+  .db-status.is-connected {
+    border-color: rgba(125,191,142,0.5); background: rgba(125,191,142,0.12); color: var(--green-mist);
+  }
+  .db-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #ff6b6b; flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(255,107,107,0.25);
+    animation: pulse-red 1.5s ease-in-out infinite;
+  }
+  .db-dot.connected {
+    background: var(--green-mist);
+    box-shadow: 0 0 0 2px rgba(125,191,142,0.25);
+    animation: pulse-green 2s ease-in-out infinite;
+  }
+  @keyframes pulse-red {
+    0%, 100% { box-shadow: 0 0 0 2px rgba(255,107,107,0.25); }
+    50% { box-shadow: 0 0 0 5px rgba(255,107,107,0.0); }
+  }
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 0 2px rgba(125,191,142,0.25), 0 0 6px rgba(125,191,142,0.4); }
+    50% { box-shadow: 0 0 0 5px rgba(125,191,142,0.0), 0 0 10px rgba(125,191,142,0.2); }
+  }
 
   /* ── FULL EXPENSE LOG PANEL ── */
   .expense-log-panel {
@@ -468,9 +561,9 @@
   .footer strong { color: var(--green-mist); }
   
   @media (max-width: 480px) {
-    .hero h1 { font-size: 32px; }
-    .hero-stats { gap: 16px; }
-    .stat-val { font-size: 18px; }
+    .hero h1 { font-size: 34px; }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .stat-val { font-size: 22px; }
     .fund-stats { flex-direction: column; align-items: flex-start; }
     .fund-stat.balance { border-left: none; padding-left: 0; padding-top: 12px; border-top: 1px dashed rgba(255,255,255,0.1); width: 100%; }
     .fund-operator { display: none; }
@@ -492,7 +585,7 @@
     </div>
     <div class="db-status" id="dbStatus">
       <div class="db-dot" id="dbDot"></div>
-      <span id="dbLabel">Supabase connecting...</span>
+      <span id="dbLabel">DB connecting…</span>
     </div>
   </div>
   <button class="expense-panel-btn" onclick="toggleExpensePanel()">🧾 Expense Log</button>
@@ -500,13 +593,22 @@
 
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">🚗 Road Trip Reference · Toyota Urban Cruiser</div>
+        <div class="hero-meta-row">
+      <span class="hero-badge">🚗 Road Trip · Toyota Urban Cruiser</span>
+      <span class="hero-date-pill">📅 Apr 2 – 6, 2026</span>
+    </div>
+
     <h1>Chennai → <em>Munnar</em><br>& Back</h1>
-    <p class="hero-sub">Apr 2 (Thu) 5 PM departure · Return Apr 6 (Mon) ~5 AM</p>
-    <div class="hero-travelers" style="margin-bottom:28px;">
-      <div style="font-size:11px; font-weight:600; color:rgba(245,240,232,0.5); margin-bottom:8px; letter-spacing:0.1em; text-transform:uppercase;">👥 Travelers</div>
-      <div style="font-size:14px; color:#f8f6f0; line-height:1.6; font-weight:500;">
-        1. Mohamed Rasik Farid <span style="opacity:0.4">|</span> 2. Palani <span style="opacity:0.4">|</span> 3. Rajesh <span style="opacity:0.4">|</span> 4. Rajesh Singh <span style="opacity:0.4">|</span> 5. Senthil
+    <p class="hero-sub">Thu 5:00 PM departure &nbsp;·&nbsp; Return Mon ~5:00 AM &nbsp;·&nbsp; ~1,100 km total</p>
+
+    <div class="hero-travelers-block">
+      <div class="hero-travelers-label">👥 Travelers</div>
+      <div class="hero-travelers-chips">
+        <div class="traveler-chip"><div class="traveler-num">1</div><span class="traveler-name">Mohamed Rasik Farid</span></div>
+        <div class="traveler-chip"><div class="traveler-num">2</div><span class="traveler-name">Palani</span></div>
+        <div class="traveler-chip"><div class="traveler-num">3</div><span class="traveler-name">Rajesh</span></div>
+        <div class="traveler-chip"><div class="traveler-num">4</div><span class="traveler-name">Rajesh Singh</span></div>
+        <div class="traveler-chip"><div class="traveler-num">5</div><span class="traveler-name">Senthil</span></div>
       </div>
     </div>
     <div class="hero-stats">
@@ -1359,7 +1461,7 @@ async function init() {
     if (SUPABASE_URL && SUPABASE_URL.includes('supabase.co')) {
       db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       await loadFromSupabase();
-      document.getElementById('dbDot').classList.add('connected');
+      document.getElementById('dbDot').classList.add('connected'); document.getElementById('dbStatus').classList.add('is-connected');
       document.getElementById('dbLabel').textContent = 'Supabase connected ✓';
     } else {
       loadFromLocalStorage();
@@ -1872,16 +1974,16 @@ async function persist() {
 
   // 2. If online and Supabase is setup, push to the cloud
   if (navigator.onLine && db) {
-    try {
+        try {
       await saveToSupabase();
-      document.getElementById('dbDot').classList.add('connected');
+      document.getElementById('dbDot').classList.add('connected'); document.getElementById('dbStatus').classList.add('is-connected');
       document.getElementById('dbLabel').textContent = 'Supabase connected ✓';
     } catch (e) {
-      document.getElementById('dbDot').classList.remove('connected');
+      document.getElementById('dbDot').classList.remove('connected'); document.getElementById('dbStatus').classList.remove('is-connected');
       document.getElementById('dbLabel').textContent = 'Offline (Saved locally)';
     }
   } else {
-    document.getElementById('dbDot').classList.remove('connected');
+    document.getElementById('dbDot').classList.remove('connected'); document.getElementById('dbStatus').classList.remove('is-connected');
     document.getElementById('dbLabel').textContent = 'Offline (Saved locally)';
   }
 }
@@ -1939,7 +2041,7 @@ window.addEventListener('online', async () => {
     try {
       // Push the latest local storage data up to Supabase
       await saveToSupabase();
-      document.getElementById('dbDot').classList.add('connected');
+      document.getElementById('dbDot').classList.add('connected'); document.getElementById('dbStatus').classList.add('is-connected');
       document.getElementById('dbLabel').textContent = 'Supabase connected & Synced ✓';
     } catch (e) {
       document.getElementById('dbLabel').textContent = 'Sync failed. Retrying later.';
@@ -1948,7 +2050,7 @@ window.addEventListener('online', async () => {
 });
 
 window.addEventListener('offline', () => {
-  document.getElementById('dbDot').classList.remove('connected');
+  document.getElementById('dbDot').classList.remove('connected'); document.getElementById('dbStatus').classList.remove('is-connected');
   document.getElementById('dbLabel').textContent = 'Offline (Saving locally)';
 });
 </script>
