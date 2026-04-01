@@ -34,7 +34,9 @@
 
   body {
     font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
+    /* background: var(--cream); */
+     background: linear-gradient(rgba(248, 246, 240, 0.92), rgba(248, 246, 240, 0.96)), 
+                url('bg.jpg') center/cover fixed;
     color: var(--text-dark);
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
@@ -49,7 +51,9 @@
 
   /* HEADER */
   .hero {
-    background: var(--night);
+    /* background: var(--night); */
+     background: linear-gradient(rgba(11, 26, 19, 0.6), rgba(11, 26, 19, 0.85)), 
+                url('header.jpg') center/cover no-repeat;
     color: var(--cream);
     padding: 56px 24px 48px;
     position: relative;
@@ -88,6 +92,36 @@
 
   /* BODY */
   .container { max-width: 680px; margin: 0 auto; padding: 0 16px 60px; }
+
+  /* TRIP FUND OVERVIEW */
+  .fund-overview-card {
+    background: var(--night-card);
+    border: 1px solid rgba(125,191,142,0.3);
+    border-radius: var(--border-radius);
+    padding: 24px; margin-top: 32px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .fund-title {
+    font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 600;
+    color: var(--green-mist); display: flex; align-items: center; justify-content: space-between;
+  }
+  .fund-stats {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    background: rgba(0,0,0,0.25); padding: 20px; border-radius: 12px; gap: 12px;
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+  .fund-stat { display: flex; flex-direction: column; gap: 6px; }
+  .fund-label {
+    font-size: 10px; font-family: 'DM Mono', monospace; font-weight: 600;
+    color: rgba(245,240,232,0.5); text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .fund-value { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--cream); }
+  .fund-operator { font-size: 20px; color: rgba(245,240,232,0.2); font-weight: 300; }
+  .fund-stat.balance { padding-left: 12px; border-left: 1px dashed rgba(255,255,255,0.1); }
+  .fund-stat.balance .fund-value { color: var(--amber-light); }
+  .fund-stat.balance.positive .fund-value { color: var(--green-mist); }
+  .fund-stat.balance.negative .fund-value { color: #ff8a8a; }
 
   /* DAY BLOCK */
   .day-block { margin-top: 40px; }
@@ -434,6 +468,9 @@
     .hero h1 { font-size: 32px; }
     .hero-stats { gap: 16px; }
     .stat-val { font-size: 18px; }
+    .fund-stats { flex-direction: column; align-items: flex-start; }
+    .fund-stat.balance { border-left: none; padding-left: 0; padding-top: 12px; border-top: 1px dashed rgba(255,255,255,0.1); width: 100%; }
+    .fund-operator { display: none; }
   }
 </style>
 </head>
@@ -479,6 +516,27 @@
 </div>
 
 <div class="container">
+
+  <!-- ── TRIP FUND OVERVIEW (Collection - Spend = Balance) ── -->
+  <div class="fund-overview-card">
+    <div class="fund-title">Trip Fund Overview</div>
+    <div class="fund-stats">
+      <div class="fund-stat">
+        <span class="fund-label">Collected Pool</span>
+        <span class="fund-value" id="fundCollected">₹0</span>
+      </div>
+      <div class="fund-operator">-</div>
+      <div class="fund-stat">
+        <span class="fund-label">Total Spent</span>
+        <span class="fund-value" id="fundSpent">₹0</span>
+      </div>
+      <div class="fund-operator">=</div>
+      <div class="fund-stat balance" id="fundBalanceContainer">
+        <span class="fund-label">Available Balance</span>
+        <span class="fund-value" id="fundBalance">₹0</span>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══════════════════════════════════════════ NIGHT DRIVE ══ -->
   <div class="day-block">
@@ -748,7 +806,7 @@
     <div class="day-header day2">
       <div>
         <div class="day-num">Day 2</div>
-        <div class="day-title">Mattupetty → Top Station → Vattavada</div>
+        <div class="day-title">Mattupetty → Top Station → Vattavada Direction</div>
       </div>
       <div class="day-date">Apr 4 Sat</div>
     </div>
@@ -777,7 +835,7 @@
         <div class="stop-main">
           <div class="stop-timeline"><div class="stop-dot dot-green">2</div></div>
           <div class="stop-content">
-            <div class="stop-time">09:00 – 09:30 — ELEPHANT SAFARI / ARRIVAL SPOT</div>
+            <div class="stop-time">09:00 – 09:30 — ELEPHANT SAFARI / ELEPHANT ARRIVAL SPOT</div>
             <div class="stop-name">
               <a href="https://www.google.com/maps/search/Elephant+arrival+spot+Mattupetty+Munnar" target="_blank">Elephant Arrival Spot · Mattupetty Road</a>
               <a href="https://www.google.com/maps/search/elephant+safari+Munnar" target="_blank" class="map-btn">Find on Maps</a>
@@ -1271,11 +1329,9 @@ const TRIP_ID = 'munnar-apr-2026-v2';
 
 let db = null;
 let tripState = {}; 
-// { stopId: { visited: bool, name: string, expenses: [{id, amount, note, ts}] } }
-
 let financeState = {
   stays: { cw: { total:0, advance:0, paidby:'' }, me: { total:0, advance:0, paidby:'' } },
-  members: {} // { id: { entries: [{id, type, amt, note, ts}] } }
+  members: {}
 };
 
 const TRAVELERS = [
@@ -1286,7 +1342,7 @@ const TRAVELERS = [
   { id: 'senthil',     name: 'Senthil',               initials: 'SE' },
 ];
 
-const memberEntryType = {}; // Local UI state
+const memberEntryType = {}; 
 
 // ════════════════════════════════════════════════════════
 //  INIT
@@ -1311,11 +1367,44 @@ async function init() {
   injectStopUI();
   applyStateToUI();
   updateTracker();
-
   injectMemberGrid();
   applyFinanceStateToUI();
 }
 window.addEventListener('DOMContentLoaded', init);
+
+// ════════════════════════════════════════════════════════
+//  FUND OVERVIEW (Collection - Spend = Balance)
+// ════════════════════════════════════════════════════════
+function updateFundOverview() {
+  let collectedPool = 0;
+  TRAVELERS.forEach(t => {
+    const entries = financeState.members[t.id]?.entries || [];
+    collectedPool += entries.filter(e => e.type === 'to-account').reduce((s,e) => s + e.amt, 0);
+  });
+
+  let totalSpent = 0;
+  document.querySelectorAll('.stop').forEach(stop => {
+    const s = tripState[stop.dataset.stopId];
+    if (s && s.visited && s.expenses) {
+      totalSpent += s.expenses.reduce((sum, e) => sum + e.amount, 0);
+    }
+  });
+  if (financeState?.stays?.cw?.advance > 0) totalSpent += financeState.stays.cw.advance;
+  if (financeState?.stays?.me?.advance > 0) totalSpent += financeState.stays.me.advance;
+
+  const balance = collectedPool - totalSpent;
+
+  document.getElementById('fundCollected').textContent = '₹' + collectedPool.toLocaleString('en-IN');
+  document.getElementById('fundSpent').textContent = '₹' + totalSpent.toLocaleString('en-IN');
+  
+  const balEl = document.getElementById('fundBalance');
+  balEl.textContent = (balance < 0 ? '-₹' : '₹') + Math.abs(balance).toLocaleString('en-IN');
+  
+  const statContainer = document.getElementById('fundBalanceContainer');
+  statContainer.classList.remove('positive', 'negative');
+  if (balance >= 0) statContainer.classList.add('positive');
+  else if (balance < 0) statContainer.classList.add('negative');
+}
 
 // ════════════════════════════════════════════════════════
 //  INJECT CHECKBOX & EXPENSE UI INTO EACH STOP
@@ -1335,13 +1424,11 @@ function injectStopUI() {
 
     const mainDiv = stop.querySelector('.stop-main');
     
-    // Checkbox column
     const checkCol = document.createElement('div');
     checkCol.className = 'visit-check';
     checkCol.innerHTML = `<input type="checkbox" onchange="toggleVisit(this, '${stopId}', '${escHtml(displayName)}')">`;
     mainDiv.insertBefore(checkCol, mainDiv.firstChild);
 
-    // Expense Multi-Row Container
     const expWrapper = document.createElement('div');
     expWrapper.className = 'expense-row-wrapper';
     expWrapper.innerHTML = `
@@ -1455,7 +1542,6 @@ function updateTracker() {
     }
   });
 
-  // Include Stay Advances
   if (financeState?.stays?.cw?.advance > 0) spent += financeState.stays.cw.advance;
   if (financeState?.stays?.me?.advance > 0) spent += financeState.stays.me.advance;
 
@@ -1465,6 +1551,7 @@ function updateTracker() {
   document.getElementById('progressFill').style.width = pct + '%';
   
   renderExpenseLog();
+  updateFundOverview();
 }
 
 function toggleExpensePanel() {
@@ -1476,7 +1563,6 @@ function renderExpenseLog() {
   const entries = [];
   let total = 0;
 
-  // Spot Expenses
   document.querySelectorAll('.stop').forEach(stop => {
     const s = tripState[stop.dataset.stopId];
     if (s && s.visited && s.expenses) {
@@ -1487,7 +1573,6 @@ function renderExpenseLog() {
     }
   });
 
-  // Stay Advances
   if (financeState?.stays?.cw?.advance > 0) {
     entries.push({
       name: '🏨 Candlewood Homes', amount: financeState.stays.cw.advance,
@@ -1738,6 +1823,8 @@ function updateMemberSummary() {
   document.getElementById('total_direct_spend').textContent = '₹' + directTotal.toLocaleString('en-IN');
   document.getElementById('memberCollectedDisplay').textContent = '₹' + toAccTotal.toLocaleString('en-IN');
   document.getElementById('total_pending').textContent = '₹' + Math.max(0, expected - toAccTotal).toLocaleString('en-IN');
+  
+  updateFundOverview();
 }
 
 function applyFinanceStateToUI() {
