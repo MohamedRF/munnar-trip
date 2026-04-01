@@ -1558,7 +1558,17 @@ function updateTracker() {
 }
 
 function toggleExpensePanel() {
-  document.getElementById('expenseLogPanel').classList.toggle('open');
+ const panel = document.getElementById('expenseLogPanel');
+
+  panel.classList.toggle('open');
+
+  // Scroll to panel AFTER opening
+  if (panel.classList.contains('open')) {
+    panel.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+  }
 }
 
 function renderExpenseLog() {
