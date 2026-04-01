@@ -302,9 +302,445 @@
     .hero-stats { gap: 16px; }
     .stat-val { font-size: 16px; }
   }
+
+  /* ── CHECKBOX STYLES ── */
+  .stop {
+    position: relative;
+  }
+  .stop.visited {
+    background: #f0faf3 !important;
+  }
+  .stop.visited .stop-name a:first-child {
+    text-decoration: line-through;
+    color: var(--text-light);
+  }
+  .visit-check {
+    display: flex;
+    align-items: flex-start;
+    padding: 16px 0 16px 8px;
+    flex-shrink: 0;
+  }
+  .visit-check input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--green-mid);
+    cursor: pointer;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── EXPENSE PANEL ── */
+  .expense-row {
+    display: none;
+    padding: 8px 16px 12px 60px;
+    background: #f7fbf8;
+    border-top: 1px dashed rgba(74,140,92,0.18);
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .stop.visited .expense-row {
+    display: flex;
+  }
+  .expense-row input[type="number"],
+  .expense-row input[type="text"] {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 5px 10px;
+    background: white;
+    color: var(--text-dark);
+    outline: none;
+  }
+  .expense-row input[type="number"] { width: 110px; }
+  .expense-row input[type="text"]   { flex: 1; min-width: 140px; }
+  .expense-row input:focus { border-color: var(--green-light); }
+  .expense-save-btn {
+    background: var(--green-mid);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .expense-save-btn:hover { background: var(--green-deep); }
+  .expense-saved {
+    font-size: 11px;
+    color: var(--green-mid);
+    font-family: 'DM Mono', monospace;
+    display: none;
+  }
+  .expense-display {
+    font-size: 11px;
+    color: var(--text-light);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── TRACKER SUMMARY ── */
+  .tracker-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--night);
+    border-bottom: 1px solid rgba(74,140,92,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tracker-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .tracker-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: rgba(245,240,232,0.75);
+    font-family: 'DM Mono', monospace;
+  }
+  .tracker-pill strong {
+    color: var(--amber-light);
+  }
+  .tracker-progress {
+    width: 80px;
+    height: 5px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .tracker-progress-fill {
+    height: 100%;
+    background: var(--green-mist);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+  }
+  .expense-panel-btn {
+    background: rgba(74,140,92,0.2);
+    border: 1px solid rgba(125,191,142,0.3);
+    color: var(--green-mist);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.15s;
+  }
+  .expense-panel-btn:hover { background: rgba(74,140,92,0.35); }
+
+  /* ── FULL EXPENSE LOG PANEL ── */
+  .expense-log-panel {
+    display: none;
+    background: var(--night-card);
+    border: 1px solid rgba(74,140,92,0.2);
+    border-radius: 14px;
+    margin-top: 24px;
+    overflow: hidden;
+  }
+  .expense-log-panel.open { display: block; }
+  .expense-log-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(74,140,92,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .expense-log-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--green-mist);
+  }
+  .expense-log-total {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--amber-light);
+  }
+  .expense-log-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .expense-log-table th {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+    padding: 8px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .expense-log-table td {
+    font-size: 12px;
+    color: rgba(245,240,232,0.8);
+    padding: 9px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-family: 'DM Mono', monospace;
+  }
+  .expense-log-table td:first-child { color: var(--cream); font-family: 'DM Sans', sans-serif; font-size: 13px; }
+  .expense-log-table td.amt { color: var(--amber-light); }
+  .expense-log-table tr:last-child td { border-bottom: none; }
+  .expense-empty {
+    padding: 24px;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(245,240,232,0.3);
+    font-style: italic;
+  }
+
+  /* ── DB STATUS ── */
+  .db-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: rgba(245,240,232,0.4);
+    padding: 3px 0;
+  }
+  .db-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #ff6b6b;
+    flex-shrink: 0;
+  }
+  .db-dot.connected { background: var(--green-mist); }
+
+  /* ── FINANCE PANELS ── */
+  .finance-section {
+    margin-top: 28px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(74,140,92,0.2);
+    background: var(--night-card);
+  }
+  .finance-section-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(74,140,92,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  .finance-section-header:hover { background: rgba(74,140,92,0.07); }
+  .finance-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--green-mist);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .finance-section-summary {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--amber-light);
+  }
+  .finance-section-body {
+    padding: 16px 20px;
+  }
+
+  /* Stay advance cards */
+  .stay-advance-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(74,140,92,0.15);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .stay-advance-card:last-child { margin-bottom: 0; }
+  .stay-advance-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .stay-advance-name .stay-badge {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    background: rgba(74,140,92,0.2);
+    color: var(--green-mist);
+    padding: 2px 8px;
+    border-radius: 8px;
+  }
+  .stay-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .stay-fields label {
+    font-size: 10px;
+    color: rgba(245,240,232,0.4);
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stay-fields input {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    border: 1px solid rgba(74,140,92,0.25);
+    border-radius: 7px;
+    padding: 5px 10px;
+    background: rgba(255,255,255,0.05);
+    color: var(--cream);
+    outline: none;
+    width: 130px;
+  }
+  .stay-fields input:focus { border-color: var(--green-light); }
+  .stay-total-display {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--amber-light);
+    margin-top: 8px;
+  }
+
+  /* Member contribution table */
+  .member-grid {
+    display: grid;
+    gap: 10px;
+  }
+  .member-row {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(74,140,92,0.12);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .member-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--green-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cream);
+    flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+  }
+  .member-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cream);
+    flex: 1;
+    min-width: 100px;
+  }
+  .member-fields {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .member-fields input[type="number"] {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    border: 1px solid rgba(74,140,92,0.25);
+    border-radius: 7px;
+    padding: 5px 10px;
+    background: rgba(255,255,255,0.05);
+    color: var(--cream);
+    outline: none;
+    width: 120px;
+  }
+  .member-fields input:focus { border-color: var(--green-light); }
+  .member-status {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    padding: 3px 8px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  .status-paid   { background: rgba(74,140,92,0.2);  color: var(--green-mist); }
+  .status-partial{ background: rgba(212,137,26,0.2); color: var(--amber-light); }
+  .status-unpaid { background: rgba(200,60,60,0.15); color: #f08080; }
+  .member-save-btn {
+    background: var(--green-mid);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .member-save-btn:hover { background: var(--green-deep); }
+
+  /* Summary bar inside finance */
+  .finance-summary-bar {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(74,140,92,0.12);
+  }
+  .finance-summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .finance-summary-label {
+    font-size: 10px;
+    color: rgba(245,240,232,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-family: 'DM Mono', monospace;
+  }
+  .finance-summary-value {
+    font-size: 16px;
+    font-family: 'DM Mono', monospace;
+    color: var(--amber-light);
+  }
+  .finance-summary-value.green { color: var(--green-mist); }
+  .finance-summary-value.red   { color: #f08080; }
 </style>
+
+<!-- Supabase JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+
+<!-- ── STICKY TRACKER BAR ── -->
+<div class="tracker-bar" id="trackerBar">
+  <div class="tracker-bar-left">
+    <div class="tracker-pill">
+      <span>Visited</span>
+      <strong id="visitedCount">0</strong><span>/</span><strong id="totalCount">0</strong>
+      <div class="tracker-progress"><div class="tracker-progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+    <div class="tracker-pill">
+      💸 Total Spent: <strong id="totalSpent">₹0</strong>
+    </div>
+    <div class="db-status" id="dbStatus">
+      <div class="db-dot" id="dbDot"></div>
+      <span id="dbLabel">Not connected to Supabase</span>
+    </div>
+  </div>
+  <button class="expense-panel-btn" onclick="toggleExpensePanel()">📋 Expense Log</button>
+</div>
 
 <div class="hero">
   <div class="hero-inner">
@@ -960,6 +1396,601 @@
 <div class="footer">
   Generated for reference · <strong>Urban Cruiser Road Trip · Apr 2–6, 2026</strong> · Chennai ⇌ Munnar · All map links open Google Maps
 </div>
+
+<!-- ── EXPENSE LOG PANEL ── -->
+<div class="container">
+  <div class="expense-log-panel" id="expenseLogPanel">
+    <div class="expense-log-header">
+      <div class="expense-log-title">🧾 Full Expense Log</div>
+      <div class="expense-log-total">Total: <span id="logTotal">₹0</span></div>
+    </div>
+    <div id="expenseLogBody">
+      <div class="expense-empty">No expenses recorded yet. Mark a stop as visited to log expenses.</div>
+    </div>
+  </div>
+
+  <!-- ── STAY ADVANCE PAYMENTS ── -->
+  <div class="finance-section" id="stayAdvanceSection">
+    <div class="finance-section-header" onclick="toggleSection('stayAdvanceBody')">
+      <div class="finance-section-title">🏨 Stay Advance Payments</div>
+      <div class="finance-summary-section-right" style="display:flex;align-items:center;gap:14px;">
+        <span class="finance-section-summary">Total paid: <span id="advanceTotalDisplay">₹0</span></span>
+        <span style="color:rgba(245,240,232,0.3);font-size:12px;">▾</span>
+      </div>
+    </div>
+    <div class="finance-section-body" id="stayAdvanceBody">
+
+      <!-- Candlewood -->
+      <div class="stay-advance-card">
+        <div class="stay-advance-name">
+          Candlewood Homes Munnar
+          <span class="stay-badge">Day 1 Stay</span>
+        </div>
+        <div class="stay-fields">
+          <label>Total Cost (₹)
+            <input type="number" id="cw_total" placeholder="0" oninput="updateStayCalc('cw')" onchange="saveFinance()">
+          </label>
+          <label>Advance Paid (₹)
+            <input type="number" id="cw_advance" placeholder="0" oninput="updateStayCalc('cw')" onchange="saveFinance()">
+          </label>
+          <label>Paid By
+            <input type="text" id="cw_paidby" placeholder="e.g. Rasik" style="width:130px;" onchange="saveFinance()">
+          </label>
+        </div>
+        <div class="stay-total-display" id="cw_display"></div>
+      </div>
+
+      <!-- Mount Elbrus -->
+      <div class="stay-advance-card">
+        <div class="stay-advance-name">
+          Mount Elbrus Homestay, Devikulam
+          <span class="stay-badge">Day 2 Stay</span>
+        </div>
+        <div class="stay-fields">
+          <label>Total Cost (₹)
+            <input type="number" id="me_total" placeholder="0" oninput="updateStayCalc('me')" onchange="saveFinance()">
+          </label>
+          <label>Advance Paid (₹)
+            <input type="number" id="me_advance" placeholder="0" oninput="updateStayCalc('me')" onchange="saveFinance()">
+          </label>
+          <label>Paid By
+            <input type="text" id="me_paidby" placeholder="e.g. Rasik" style="width:130px;" onchange="saveFinance()">
+          </label>
+        </div>
+        <div class="stay-total-display" id="me_display"></div>
+      </div>
+
+      <div class="finance-summary-bar">
+        <div class="finance-summary-item">
+          <div class="finance-summary-label">Total Stay Cost</div>
+          <div class="finance-summary-value" id="stay_total_cost">₹0</div>
+        </div>
+        <div class="finance-summary-item">
+          <div class="finance-summary-label">Total Advance Paid</div>
+          <div class="finance-summary-value green" id="stay_total_advance">₹0</div>
+        </div>
+        <div class="finance-summary-item">
+          <div class="finance-summary-label">Balance at Check-in</div>
+          <div class="finance-summary-value red" id="stay_balance">₹0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MEMBER CONTRIBUTIONS ── -->
+  <div class="finance-section" style="margin-bottom:40px;">
+    <div class="finance-section-header" onclick="toggleSection('memberBody')">
+      <div class="finance-section-title">👥 Member Contributions to Rasik</div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span class="finance-section-summary">Collected: <span id="memberCollectedDisplay">₹0</span></span>
+        <span style="color:rgba(245,240,232,0.3);font-size:12px;">▾</span>
+      </div>
+    </div>
+    <div class="finance-section-body" id="memberBody">
+      <div class="member-grid" id="memberGrid">
+        <!-- injected by JS -->
+      </div>
+      <div class="finance-summary-bar">
+        <div class="finance-summary-item">
+          <div class="finance-summary-label">Expected (per person)</div>
+          <div class="finance-summary-value" id="per_person_share">₹0</div>
+        </div>
+        <div class="finance-summary-item">
+          <div class="finance-summary-label">Total Collected</div>
+          <div class="finance-summary-value green" id="total_collected">₹0</div>
+        </div>
+        <div class="finance-summary-item">
+          <div class="finance-summary-label">Still Pending</div>
+          <div class="finance-summary-value red" id="total_pending">₹0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  SUPABASE CONFIG  — replace with your actual values
+// ════════════════════════════════════════════════════════
+const SUPABASE_URL = 'https://khvqmdnmfyzgartonoff.supabase.co';       // e.g. https://xxxx.supabase.co
+const SUPABASE_ANON_KEY = 'sb_publishable_GJSPS-F-QZUxNOlUxYOTIg_jP3AhVYy'; // from Supabase dashboard > API
+
+// ════════════════════════════════════════════════════════
+//  TRIP ID — unique key for this trip in the DB
+// ════════════════════════════════════════════════════════
+const TRIP_ID = 'munnar-apr-2026';
+
+// ════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════
+let db = null;
+let tripState = {}; // { stopId: { visited: bool, amount: number, note: string, ts: string } }
+
+// ════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════
+async function init() {
+  // Try to connect to Supabase
+  try {
+    if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+      db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      // Test connection by fetching trip state
+      await loadFromSupabase();
+      document.getElementById('dbDot').classList.add('connected');
+      document.getElementById('dbLabel').textContent = 'Supabase connected ✓';
+    } else {
+      // Fallback to localStorage
+      loadFromLocalStorage();
+      document.getElementById('dbLabel').textContent = 'LocalStorage mode (setup Supabase below)';
+    }
+  } catch (e) {
+    console.warn('Supabase error, falling back to localStorage:', e);
+    loadFromLocalStorage();
+  }
+
+  // Assign IDs and inject UI into every .stop
+  injectStopUI();
+  applyStateToUI();
+  updateTracker();
+
+  // Finance sections
+  injectMemberGrid();
+  applyFinanceStateToUI();
+}
+
+// ════════════════════════════════════════════════════════
+//  INJECT CHECKBOX + EXPENSE ROW INTO EACH STOP
+// ════════════════════════════════════════════════════════
+function injectStopUI() {
+  const stops = document.querySelectorAll('.stop');
+  document.getElementById('totalCount').textContent = stops.length;
+
+  stops.forEach((stop, idx) => {
+    // Generate stable ID from stop content
+    const timeEl = stop.querySelector('.stop-time');
+    const nameEl = stop.querySelector('.stop-name');
+    const label = (timeEl ? timeEl.textContent.trim() : '') + (nameEl ? nameEl.textContent.trim() : '');
+    const stopId = 'stop_' + btoa(encodeURIComponent(label.slice(0, 60))).replace(/[^a-zA-Z0-9]/g,'').slice(0,20) + '_' + idx;
+    stop.dataset.stopId = stopId;
+
+    const displayName = nameEl ? nameEl.textContent.replace(/Open Maps|Find on Maps|Navigation/g, '').trim().split('\n')[0].trim() : `Stop ${idx+1}`;
+
+    // Checkbox column
+    const checkCol = document.createElement('div');
+    checkCol.className = 'visit-check';
+    checkCol.innerHTML = `<input type="checkbox" title="Mark as visited" onchange="toggleVisit(this, '${stopId}', '${escHtml(displayName)}')">`;
+    stop.insertBefore(checkCol, stop.firstChild);
+
+    // Expense row
+    const expRow = document.createElement('div');
+    expRow.className = 'expense-row';
+    expRow.id = 'exp_' + stopId;
+    expRow.innerHTML = `
+      <span style="font-size:11px;color:var(--text-light);font-family:'DM Mono',monospace;white-space:nowrap;">₹ Spent:</span>
+      <input type="number" placeholder="0" min="0" step="1" id="amt_${stopId}" style="width:110px">
+      <input type="text" placeholder="Note (e.g. entry + boat ride)" id="note_${stopId}">
+      <button class="expense-save-btn" onclick="saveExpense('${stopId}', '${escHtml(displayName)}')">Save</button>
+      <span class="expense-saved" id="saved_${stopId}">✓ Saved</span>
+      <span class="expense-display" id="disp_${stopId}"></span>
+    `;
+    stop.appendChild(expRow);
+  });
+}
+
+function escHtml(s) {
+  return s.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+// ════════════════════════════════════════════════════════
+//  TOGGLE VISIT
+// ════════════════════════════════════════════════════════
+async function toggleVisit(checkbox, stopId, name) {
+  if (!tripState[stopId]) tripState[stopId] = {};
+  tripState[stopId].visited = checkbox.checked;
+  tripState[stopId].name = name;
+  if (!tripState[stopId].ts_visited && checkbox.checked) {
+    tripState[stopId].ts_visited = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour12: true });
+  }
+  if (!checkbox.checked) {
+    tripState[stopId].ts_visited = null;
+  }
+
+  applyStateToUI();
+  updateTracker();
+  await persist();
+}
+
+// ════════════════════════════════════════════════════════
+//  SAVE EXPENSE
+// ════════════════════════════════════════════════════════
+async function saveExpense(stopId, name) {
+  const amt = parseFloat(document.getElementById('amt_' + stopId).value) || 0;
+  const note = document.getElementById('note_' + stopId).value.trim();
+  const ts = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour12: true });
+
+  if (!tripState[stopId]) tripState[stopId] = {};
+  tripState[stopId].amount = amt;
+  tripState[stopId].expNote = note;
+  tripState[stopId].ts_expense = ts;
+  tripState[stopId].name = name;
+
+  // Show saved indicator
+  const savedEl = document.getElementById('saved_' + stopId);
+  savedEl.style.display = 'inline';
+  setTimeout(() => { savedEl.style.display = 'none'; }, 2000);
+
+  updateTracker();
+  renderExpenseLog();
+  await persist();
+}
+
+// ════════════════════════════════════════════════════════
+//  APPLY STATE TO UI
+// ════════════════════════════════════════════════════════
+function applyStateToUI() {
+  document.querySelectorAll('.stop').forEach(stop => {
+    const id = stop.dataset.stopId;
+    const s = tripState[id];
+    if (!s) return;
+
+    const cb = stop.querySelector('input[type="checkbox"]');
+    if (cb) cb.checked = !!s.visited;
+
+    if (s.visited) stop.classList.add('visited');
+    else stop.classList.remove('visited');
+
+    if (s.amount) {
+      const amtEl = document.getElementById('amt_' + id);
+      const noteEl = document.getElementById('note_' + id);
+      if (amtEl) amtEl.value = s.amount;
+      if (noteEl) noteEl.value = s.expNote || '';
+      const disp = document.getElementById('disp_' + id);
+      if (disp) disp.textContent = s.ts_expense ? `Last saved: ${s.ts_expense}` : '';
+    }
+  });
+}
+
+// ════════════════════════════════════════════════════════
+//  UPDATE TRACKER BAR
+// ════════════════════════════════════════════════════════
+function updateTracker() {
+  const stops = document.querySelectorAll('.stop');
+  const total = stops.length;
+  let visited = 0, spent = 0;
+
+  stops.forEach(stop => {
+    const s = tripState[stop.dataset.stopId];
+    if (s && s.visited) visited++;
+    if (s && s.amount) spent += parseFloat(s.amount) || 0;
+  });
+
+  document.getElementById('visitedCount').textContent = visited;
+  document.getElementById('totalSpent').textContent = '₹' + spent.toLocaleString('en-IN');
+  const pct = total > 0 ? (visited / total * 100).toFixed(1) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  renderExpenseLog();
+}
+
+// ════════════════════════════════════════════════════════
+//  EXPENSE LOG PANEL
+// ════════════════════════════════════════════════════════
+function toggleExpensePanel() {
+  document.getElementById('expenseLogPanel').classList.toggle('open');
+  renderExpenseLog();
+}
+
+function renderExpenseLog() {
+  const body = document.getElementById('expenseLogBody');
+  const entries = [];
+  let total = 0;
+
+  document.querySelectorAll('.stop').forEach(stop => {
+    const s = tripState[stop.dataset.stopId];
+    if (s && s.visited) {
+      entries.push({
+        name: s.name || stop.querySelector('.stop-time')?.textContent?.trim() || 'Stop',
+        amount: parseFloat(s.amount) || 0,
+        note: s.expNote || '—',
+        ts: s.ts_expense || (s.ts_visited || '—'),
+        visited_ts: s.ts_visited || '—'
+      });
+      total += parseFloat(s.amount) || 0;
+    }
+  });
+
+  document.getElementById('logTotal').textContent = '₹' + total.toLocaleString('en-IN');
+
+  if (entries.length === 0) {
+    body.innerHTML = '<div class="expense-empty">No stops marked visited yet.</div>';
+    return;
+  }
+
+  let rows = entries.map(e => `
+    <tr>
+      <td>${e.name}</td>
+      <td class="amt">₹${(e.amount).toLocaleString('en-IN')}</td>
+      <td>${e.note}</td>
+      <td>${e.ts}</td>
+    </tr>
+  `).join('');
+
+  body.innerHTML = `
+    <table class="expense-log-table">
+      <thead><tr><th>Location</th><th>Amount</th><th>Note</th><th>Timestamp</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+// ════════════════════════════════════════════════════════
+//  UNIFIED PERSIST
+// ════════════════════════════════════════════════════════
+async function persist() {
+  if (db) {
+    await saveToSupabase();
+  } else {
+    saveToLocalStorage();
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  TRAVELERS (matches your trip page list)
+// ════════════════════════════════════════════════════════
+const TRAVELERS = [
+  { id: 'rasik',  name: 'Mohamed Rasik Farid', initials: 'MR', isHost: true  },
+  { id: 'palani', name: 'Palani',              initials: 'PA', isHost: false },
+  { id: 'rajesh', name: 'Rajesh',              initials: 'RJ', isHost: false },
+  { id: 'rajesh_singh', name: 'Rajesh Singh',  initials: 'RS', isHost: false },
+  { id: 'senthil',name: 'Senthil',             initials: 'SE', isHost: false },
+];
+
+// Finance state
+let financeState = {
+  stays: { cw: { total:0, advance:0, paidby:'' }, me: { total:0, advance:0, paidby:'' } },
+  members: {} // { id: { paid: number, note: string, ts: string } }
+};
+
+// ════════════════════════════════════════════════════════
+//  SECTION TOGGLE
+// ════════════════════════════════════════════════════════
+function toggleSection(bodyId) {
+  const el = document.getElementById(bodyId);
+  el.style.display = el.style.display === 'none' ? '' : 'none';
+}
+
+// ════════════════════════════════════════════════════════
+//  INJECT MEMBER ROWS
+// ════════════════════════════════════════════════════════
+function injectMemberGrid() {
+  const grid = document.getElementById('memberGrid');
+  grid.innerHTML = '';
+  TRAVELERS.filter(t => !t.isHost).forEach(t => {
+    const row = document.createElement('div');
+    row.className = 'member-row';
+    row.id = 'mrow_' + t.id;
+    row.innerHTML = `
+      <div class="member-avatar">${t.initials}</div>
+      <div class="member-name">${t.name}</div>
+      <div class="member-fields">
+        <input type="number" id="mpaid_${t.id}" placeholder="₹ paid" min="0" step="1"
+          oninput="updateMemberStatus('${t.id}')" onchange="saveMemberContrib('${t.id}')">
+        <span class="member-status status-unpaid" id="mstatus_${t.id}">Not paid</span>
+      </div>
+      <button class="member-save-btn" onclick="saveMemberContrib('${t.id}')">Save</button>
+      <span style="font-size:10px;color:rgba(245,240,232,0.3);font-family:'DM Mono',monospace;" id="mts_${t.id}"></span>
+    `;
+    grid.appendChild(row);
+  });
+}
+
+// ════════════════════════════════════════════════════════
+//  STAY ADVANCE CALC
+// ════════════════════════════════════════════════════════
+function updateStayCalc(key) {
+  const total   = parseFloat(document.getElementById(key + '_total').value)   || 0;
+  const advance = parseFloat(document.getElementById(key + '_advance').value) || 0;
+  const balance = total - advance;
+  const disp = document.getElementById(key + '_display');
+  if (total > 0) {
+    disp.textContent = `Balance to pay at check-in: ₹${balance.toLocaleString('en-IN')}`;
+  } else {
+    disp.textContent = '';
+  }
+  updateStaySummary();
+  updateAdvanceTotalDisplay();
+}
+
+function updateStaySummary() {
+  const cwT = parseFloat(document.getElementById('cw_total').value)   || 0;
+  const cwA = parseFloat(document.getElementById('cw_advance').value) || 0;
+  const meT = parseFloat(document.getElementById('me_total').value)   || 0;
+  const meA = parseFloat(document.getElementById('me_advance').value) || 0;
+  document.getElementById('stay_total_cost').textContent    = '₹' + (cwT + meT).toLocaleString('en-IN');
+  document.getElementById('stay_total_advance').textContent = '₹' + (cwA + meA).toLocaleString('en-IN');
+  document.getElementById('stay_balance').textContent       = '₹' + ((cwT + meT) - (cwA + meA)).toLocaleString('en-IN');
+  updatePerPersonShare();
+}
+
+function updateAdvanceTotalDisplay() {
+  const cwA = parseFloat(document.getElementById('cw_advance').value) || 0;
+  const meA = parseFloat(document.getElementById('me_advance').value) || 0;
+  document.getElementById('advanceTotalDisplay').textContent = '₹' + (cwA + meA).toLocaleString('en-IN');
+}
+
+// ════════════════════════════════════════════════════════
+//  MEMBER STATUS + SUMMARY
+// ════════════════════════════════════════════════════════
+function updateMemberStatus(id) {
+  const paid = parseFloat(document.getElementById('mpaid_' + id).value) || 0;
+  const share = getPerPersonShare();
+  const statusEl = document.getElementById('mstatus_' + id);
+  if (paid <= 0) {
+    statusEl.className = 'member-status status-unpaid'; statusEl.textContent = 'Not paid';
+  } else if (paid >= share && share > 0) {
+    statusEl.className = 'member-status status-paid'; statusEl.textContent = '✓ Paid';
+  } else {
+    statusEl.className = 'member-status status-partial'; statusEl.textContent = 'Partial';
+  }
+  updateMemberSummary();
+}
+
+function getPerPersonShare() {
+  const cwT = parseFloat(document.getElementById('cw_total').value) || 0;
+  const meT = parseFloat(document.getElementById('me_total').value) || 0;
+  return TRAVELERS.length > 0 ? Math.round((cwT + meT) / TRAVELERS.length) : 0;
+}
+
+function updatePerPersonShare() {
+  const share = getPerPersonShare();
+  document.getElementById('per_person_share').textContent = share > 0 ? '₹' + share.toLocaleString('en-IN') : '₹0';
+  // Re-check all statuses
+  TRAVELERS.filter(t => !t.isHost).forEach(t => updateMemberStatus(t.id));
+}
+
+function updateMemberSummary() {
+  let collected = 0;
+  TRAVELERS.filter(t => !t.isHost).forEach(t => {
+    collected += parseFloat(document.getElementById('mpaid_' + t.id)?.value) || 0;
+  });
+  const share = getPerPersonShare();
+  const expected = share * (TRAVELERS.length - 1); // exclude host
+  document.getElementById('total_collected').textContent   = '₹' + collected.toLocaleString('en-IN');
+  document.getElementById('total_pending').textContent     = '₹' + Math.max(0, expected - collected).toLocaleString('en-IN');
+  document.getElementById('memberCollectedDisplay').textContent = '₹' + collected.toLocaleString('en-IN');
+}
+
+// ════════════════════════════════════════════════════════
+//  SAVE / LOAD FINANCE STATE
+// ════════════════════════════════════════════════════════
+async function saveFinance() {
+  // Read stays
+  ['cw','me'].forEach(k => {
+    financeState.stays[k] = {
+      total:   parseFloat(document.getElementById(k+'_total').value)   || 0,
+      advance: parseFloat(document.getElementById(k+'_advance').value) || 0,
+      paidby:  document.getElementById(k+'_paidby').value.trim()
+    };
+  });
+  updateStaySummary();
+  updateAdvanceTotalDisplay();
+  await persist();
+}
+
+async function saveMemberContrib(id) {
+  const paid = parseFloat(document.getElementById('mpaid_' + id).value) || 0;
+  const ts   = new Date().toLocaleString('en-IN', { timeZone:'Asia/Kolkata', hour12:true });
+  if (!financeState.members) financeState.members = {};
+  financeState.members[id] = { paid, ts };
+  document.getElementById('mts_' + id).textContent = 'Saved ' + ts;
+  updateMemberStatus(id);
+  updateMemberSummary();
+  await persist();
+}
+
+function applyFinanceStateToUI() {
+  if (!financeState) return;
+
+  // Stays
+  if (financeState.stays) {
+    ['cw','me'].forEach(k => {
+      const s = financeState.stays[k];
+      if (!s) return;
+      document.getElementById(k+'_total').value   = s.total   || '';
+      document.getElementById(k+'_advance').value = s.advance || '';
+      document.getElementById(k+'_paidby').value  = s.paidby  || '';
+      updateStayCalc(k);
+    });
+  }
+
+  // Members
+  if (financeState.members) {
+    Object.entries(financeState.members).forEach(([id, data]) => {
+      const el = document.getElementById('mpaid_' + id);
+      if (el) {
+        el.value = data.paid || '';
+        const tsEl = document.getElementById('mts_' + id);
+        if (tsEl && data.ts) tsEl.textContent = 'Saved ' + data.ts;
+        updateMemberStatus(id);
+      }
+    });
+  }
+  updateMemberSummary();
+  updateStaySummary();
+  updateAdvanceTotalDisplay();
+}
+
+// ════════════════════════════════════════════════════════
+//  PATCH SUPABASE LOAD / SAVE to include financeState
+// ════════════════════════════════════════════════════════
+async function loadFromSupabase() {
+  const { data, error } = await db
+    .from('trip_tracker')
+    .select('state, finance')
+    .eq('trip_id', TRIP_ID)
+    .maybeSingle();
+
+  if (error) throw error;
+  if (data) {
+    if (data.state)   tripState    = data.state;
+    if (data.finance) financeState = data.finance;
+  }
+}
+
+async function saveToSupabase() {
+  const { error } = await db
+    .from('trip_tracker')
+    .upsert({
+      trip_id: TRIP_ID,
+      state: tripState,
+      finance: financeState,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'trip_id' });
+  if (error) console.error('Supabase save error:', error);
+}
+
+function loadFromLocalStorage() {
+  try {
+    const raw = localStorage.getItem('trip_' + TRIP_ID);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      tripState    = parsed.tripState    || {};
+      financeState = parsed.financeState || financeState;
+    }
+  } catch(e) {}
+}
+
+function saveToLocalStorage() {
+  try {
+    localStorage.setItem('trip_' + TRIP_ID, JSON.stringify({ tripState, financeState }));
+  } catch(e) {}
+}
+
+// ════════════════════════════════════════════════════════
+//  START
+// ════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', init);
+</script>
 
 </body>
 </html>
