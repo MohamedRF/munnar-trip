@@ -710,7 +710,18 @@
       <span id="dbLabel">DB connecting…</span>
     </div>
   </div>
-  <button class="expense-panel-btn" onclick="toggleExpensePanel()">🧾 Expense Log</button>
+      <div style="display: flex; gap: 8px">
+      <button class="expense-panel-btn" style="
+            background: rgba(212, 137, 26, 0.15);
+            border-color: rgba(212, 137, 26, 0.3);
+            color: var(--amber-light);
+          " onclick="exportDataCSV()">
+        ⬇️ Export CSV
+      </button>
+      <button class="expense-panel-btn" onclick="toggleExpensePanel()">
+        🧾 Expense Log
+      </button>
+    </div>
 </div>
 
 <div class="hero">
@@ -2221,6 +2232,141 @@ window.addEventListener('offline', () => {
   document.getElementById('dbDot').classList.remove('connected'); document.getElementById('dbStatus').classList.remove('is-connected');
   document.getElementById('dbLabel').textContent = 'Offline (Saving locally)';
 });
+
+
+   // ════════════════════════════════════════════════════════
+    //  EXPORT DATA TO CSV (EXCEL)
+    // ════════════════════════════════════════════════════════
+    function exportDataCSV() {
+      const esc = (str) => `"${String(str).replace(/"/g, '""')}"`;
+
+      let csv = [];
+
+      // Calculate Summaries
+      let collectedPool = 0;
+      TRAVELERS.forEach((t) => {
+        const entries = financeState.members[t.id]?.entries || [];
+        collectedPool += entries
+          .filter((e) => e.type === "to-account")
+          .reduce((s, e) => s + e.amt, 0);
+      });
+
+      let totalSpent = 0;
+      let stopExpensesCSV = [];
+      document.querySelectorAll(".stop").forEach((stop) => {
+        const s = tripState[stop.dataset.stopId];
+        if (s && s.visited && s.expenses) {
+          s.expenses.forEach((exp) => {
+            totalSpent += exp.amount;
+            stopExpensesCSV.push([
+              esc(s.name || "Unknown Location"),
+              exp.amount,
+              esc(exp.note),
+              esc(exp.ts),
+            ]);
+          });
+        }
+      });
+
+      let stayCwAdv = financeState?.stays?.cw?.advance || 0;
+      let stayMeAdv = financeState?.stays?.me?.advance || 0;
+      totalSpent += stayCwAdv + stayMeAdv;
+
+      let balance = collectedPool - totalSpent;
+
+      // Title Block
+      csv.push(["TRIP FINANCE REPORT - CHENNAI TO MUNNAR 2026"].join(","));
+      csv.push([]);
+
+      // Section 1: Summary
+      csv.push(["--- OVERALL SUMMARY ---"].join(","));
+      csv.push(
+        ["Collected Pool", "Total Spent", "Available Balance"].join(","),
+      );
+      csv.push([collectedPool, totalSpent, balance].join(","));
+      csv.push([]);
+
+      // Section 2: Member Contributions
+      csv.push(["--- MEMBER CONTRIBUTIONS ---"].join(","));
+      csv.push(
+        [
+          "Member Name",
+          "Entry Type",
+          "Amount (Rs)",
+          "Note",
+          "Time Added",
+        ].join(","),
+      );
+      TRAVELERS.forEach((t) => {
+        const entries = financeState.members[t.id]?.entries || [];
+        entries.forEach((e) => {
+          csv.push(
+            [
+              esc(t.name),
+              esc(e.type === "to-account" ? "To Account" : "Direct Spend"),
+              e.amt,
+              esc(e.note),
+              esc(e.ts),
+            ].join(","),
+          );
+        });
+      });
+      csv.push([]);
+
+      // Section 3: Stay Advances
+      csv.push(["--- STAY ADVANCE PAYMENTS ---"].join(","));
+      csv.push(["Stay Name", "Paid By", "Advance Amount (Rs)"].join(","));
+      if (stayCwAdv > 0)
+        csv.push(
+          [
+            "Candlewood Homes",
+            esc(financeState.stays.cw.paidby || "—"),
+            stayCwAdv,
+          ].join(","),
+        );
+      if (stayMeAdv > 0)
+        csv.push(
+          [
+            "Mount Elbrus Homestay",
+            esc(financeState.stays.me.paidby || "—"),
+            stayMeAdv,
+          ].join(","),
+        );
+      if (stayCwAdv === 0 && stayMeAdv === 0)
+        csv.push(["No advances recorded", "", ""].join(","));
+      csv.push([]);
+
+      // Section 4: Individual Stop Expenses
+      csv.push(["--- STOP & ATTRACTION EXPENSES ---"].join(","));
+      csv.push(
+        ["Location / Stop", "Amount (Rs)", "Note", "Time Added"].join(","),
+      );
+      if (stopExpensesCSV.length > 0) {
+        stopExpensesCSV.forEach((row) => csv.push(row.join(",")));
+      } else {
+        csv.push(["No stop expenses recorded", "", "", ""].join(","));
+      }
+
+      // Generate File & Trigger Download
+      const csvString = csv.join("\n");
+      const blob = new Blob(["\uFEFF" + csvString], {
+        type: "text/csv;charset=utf-8;",
+      });
+      const link = document.createElement("a");
+
+      if (link.download !== undefined) {
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "Munnar_Trip_Finance_Report.csv");
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      } else {
+        alert("Your browser does not support automatic downloads.");
+      }
+    }
 </script>
 
 </body>
